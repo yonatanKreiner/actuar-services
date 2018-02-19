@@ -1,0 +1,10 @@
+{
+  "name": "intereset-calculator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Yonatan Kreiner <yonatankreiner@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
