@@ -4,7 +4,17 @@
   "main": "index.js",
   "author": "Yonatan Kreiner <yonatankreiner@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "nodemon index.js --exec babel-node --inspect"
+  },
   "dependencies": {
-    "express": "^4.16.2"
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "pg": "^7.4.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-latest": "^6.24.1",
+    "nodemon": "^1.17.3"
   }
 }

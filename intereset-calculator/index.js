@@ -1,11 +1,19 @@
-const express = require('express');
+import express from 'express';
+import bodyParser from 'body-parser';
+
+import calculate from './src/calculation';
 
 const app = express();
 
+app.use(bodyParser.json());
+
 app.set('port', (process.env.PORT || 7001));
 
-app.get('*', function(request, response) {
-  response.send('Hello Interest!')
+app.post('/', async (req, res) => {
+  const date = req.body.calculationDate;
+  const debts = req.body.debts;
+
+  res.send(await calculate(date, debts));
 });
 
 app.listen(app.get('port'), function() {
