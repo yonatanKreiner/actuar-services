@@ -1,11 +1,11 @@
 const getInterestDifferences = async (db, date, debt) => {
     let tomorrow = new Date();
-    tomorrow.setDate(date + 1);
+    tomorrow.setDate(new Date(date).getDate() + 1);
     return (await getAccumulativePrecentage(db, tomorrow) * debt.sum - debt.sum);
 }
 
 const getAccumulativePrecentage = async (db, date) => {
-    return await db.db.getInterestByDate(db.client, tomorrow)
+    return await db.db.getInterestByDate(db.client, date)
 };
 
 export default getInterestDifferences;

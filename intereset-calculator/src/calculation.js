@@ -13,7 +13,7 @@ const calculate = async (date, debts) => {
 
 const addExtra = async (db, date, debt) => {
     const interestDifference = await getInterestDifferences(db, date, debt);
-    
+
     const madadStart = await getMadadByDate(db, debt.date);
     const madadEnd = await getMadadByDate(db, date);
 

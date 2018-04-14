@@ -14,8 +14,15 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}\\index.js",
-            "runtimeExecutable": "babel-node"
+            "program": "${workspaceFolder}\\index.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch via Babel",
+            "program": "${workspaceRoot}/index.js",
+            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/babel-node",
+            "cwd": "${workspaceRoot}"
         }
     ]
 }
