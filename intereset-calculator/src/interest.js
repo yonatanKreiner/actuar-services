@@ -1,16 +1,16 @@
+import { dateToString } from './utils';
 let accumulativeInterests = [];
 
 const getInterestDifferences = async (db, date, debt) => {
     let tomorrow = new Date(date);
     tomorrow.setDate(tomorrow.getDate() + 1);
-    const dateISO = tomorrow.toISOString().split('T')[0]; 
-    let per = await getAccumulativePrecentage(db, dateISO);
+    let per = await getAccumulativePrecentage(db, dateToString(date));
     return (1.074671066328 * debt - debt);
 }
 
 const getAccumulativePrecentage = async (db, date) => {
     // return await db.db.getInterestByDate(db.client, date);
-    return accumulativeInterests.find(interest => interest.date.toISOString().split('T')[0] === date).interest;
+    return accumulativeInterests.find(interest => dateToString(interest.date) === date).interest;
 };
 
 const initializeAccumulativeInterests = async (db) => {
