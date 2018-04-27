@@ -20,13 +20,30 @@ const db = {
     },
 
     async getInterestByDate (client, date) {
-        const res = await client.query('SELECT day_interest as interest from daily_interest where date = $1', [date]);
-        return map(row => { row.interest }, res.rows);
+        try{
+            const res = await client.query('SELECT "DAY_INTEREST" as interest from daily_interest where "DATE" = $1', [date]);
+            return res.rows[0].interest;
+        }catch(e){
+            console.error(e.message);
+        }
+    },
+
+    async getInterests (client) {
+        try{
+            const res = await client.query('SELECT "DAY_INTEREST" as interest, "DATE" as date from daily_interest ORDER BY "DATE"');
+            return res.rows;
+        } catch(err) {
+            console.error(err.message);
+        }
     },
 
     async getMadadByDate (client, date) {
-        const res = await client.query('SELECT index_1951 as interest from consumer_price_index where date = $1', [date]);
-        return map(row => { row.interest }, res.rows);
+        try{
+            const res = await client.query('SELECT "INDEX_1951" as index from consumer_price_index where "DATE" = $1', [date]);
+            return res.rows[0].index;
+        } catch(err) {
+            console.error(err.message);
+        }
     }
 };
 

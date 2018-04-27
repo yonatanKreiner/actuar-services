@@ -13,7 +13,7 @@ app.post('/', async (req, res) => {
   const date = req.body.calculationDate;
   const debts = req.body.debts;
 
-  res.send(await calculate(date, debts));
+  res.send({ finalDebt: await calculate(date, debts) });
 });
 
 app.listen(app.get('port'), function() {
