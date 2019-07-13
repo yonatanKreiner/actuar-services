@@ -30,7 +30,6 @@ const getMadadRow = date => {
 }
 
 const getMadadByDate = date => {
-    const excel = getExcel();
     const worksheet = excel[sheets.madadsAndInterests]
     const row = getMadadRow(date);
     return worksheet.data[row][columns.madad];
@@ -47,10 +46,11 @@ const getInterestRow = date => {
 }
 
 const getInterestByDate = date => {
-    const excel = getExcel();
     const worksheet = excel[sheets.work]
     const row = getInterestRow(date);
     return worksheet.data[row][columns.interest];
 }
+
+const excel = getExcel();
 
 module.exports = { getMadadByDate, getInterestByDate }
