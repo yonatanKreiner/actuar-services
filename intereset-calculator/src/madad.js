@@ -1,17 +1,18 @@
+const excel = require('./excel');
+
 const indexate = (value, madadStart, madadEnd) => {
-    return (madadStart / madadEnd * value - value);
+    return (madadEnd / madadStart * value - value);
 }
 
-const getMadadByDate = async (db, date) => {
-    let isoDate = new Date(date);
-    const month = isoDate.getDate() < 15 ? 2 : 1;
-    const madadDate = `${isoDate.getFullYear()}-${isoDate.getMonth() + 1 - month}-1`;
+const getMadadByDate = date => {
+    const monthDeduction = date.getDate() < 15 ? 2 : 1;
+    date.setMonth(date.getMonth() - monthDeduction)
 
-    return await getMadadByMonth(db, madadDate);
+    return getMadadByMonth(date);
 };
 
-const getMadadByMonth = async (db, date) => {
-    return await db.db.getMadadByDate(db.client, date)
+const getMadadByMonth = date => {
+    return excel.getMadadByDate(date)
 };
 
-export {indexate, getMadadByDate};
+module.exports =  {indexate, getMadadByDate};

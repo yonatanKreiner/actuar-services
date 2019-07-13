@@ -4,10 +4,16 @@
   "main": "index.js",
   "author": "Yonatan Kreiner <yonatankreiner@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "nodemon index.js --inspect"
+  },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.16.2",
     "helmet": "^3.11.0",
-    "http": "^0.0.0",
     "http-proxy-middleware": "^0.17.4"
+  },
+  "devDependencies": {
+    "morgan": "^1.9.1"
   }
 }

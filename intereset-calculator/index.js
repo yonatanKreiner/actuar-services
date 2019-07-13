@@ -1,21 +1,24 @@
-import express from 'express';
-import bodyParser from 'body-parser';
+const express = require('express');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
 
-import calculate from './src/calculation';
+const calculate = require('./src/calculation');
 
 const app = express();
 
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 
 app.set('port', (process.env.PORT || 7001));
+app.set('name', 'interest calculator')
 
-app.post('/', async (req, res) => {
+app.post('/', (req, res) => {
   const date = req.body.calculationDate;
   const debts = req.body.debts;
 
-  res.send({ finalDebt: await calculate(date, debts) });
+  res.send({ finalDebt: calculate(date, debts) });
 });
 
-app.listen(app.get('port'), function() {
-  console.log("Node app is running at localhost:" + app.get('port')); 
+app.listen(app.get('port'), () => {
+  console.log(`${app.get('name')} is running at localhost: ${app.get('port')}`); 
 });
