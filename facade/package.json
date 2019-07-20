@@ -5,7 +5,8 @@
   "author": "Yonatan Kreiner <yonatankreiner@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon index.js --inspect"
+    "start": "node index.js",
+    "start:dev": "nodemon index.js --inspect"
   },
   "dependencies": {
     "cors": "^2.8.5",

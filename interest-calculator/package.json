@@ -1,11 +1,12 @@
 {
-  "name": "intereset-calculator",
+  "name": "interest-calculator",
   "version": "1.0.0",
   "main": "index.js",
   "author": "Yonatan Kreiner <yonatankreiner@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon index.js --inspect"
+    "start": "node index.js",
+    "start:dev": "nodemon index.js --inspect"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
