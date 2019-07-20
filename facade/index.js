@@ -2,10 +2,14 @@ const express = require('express');
 const proxy = require('http-proxy-middleware');
 const helmet = require('helmet');
 const cors = require('cors');
-const morgan = require('morgan');
 
 const app = express();
-app.use(morgan('dev'));
+
+if (process.env.NODE_ENV === 'development') {
+  const morgan = require('morgan');
+  app.use(morgan('dev'));
+}
+
 app.use(helmet());
 app.use(cors());
 

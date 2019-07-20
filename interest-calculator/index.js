@@ -1,12 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const morgan = require('morgan');
 
 const calculate = require('./src/calculation');
 
 const app = express();
 
-app.use(morgan('dev'));
+if (process.env.NODE_ENV === 'development') {
+  const morgan = require('morgan');
+  app.use(morgan('dev'));
+}
+
 app.use(bodyParser.json());
 
 app.set('port', (process.env.PORT || 7001));
