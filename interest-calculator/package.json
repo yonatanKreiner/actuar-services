@@ -4,6 +4,9 @@
   "main": "index.js",
   "author": "Yonatan Kreiner <yonatankreiner@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "node": "10.16.x"
+  },
   "scripts": {
     "start": "node index.js",
     "start:dev": "nodemon index.js --inspect"

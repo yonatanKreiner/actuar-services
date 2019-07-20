@@ -16,13 +16,15 @@ app.use(cors());
 app.set('port', (process.env.PORT || 7000));
 app.set('name', 'facade');
 
+const interestCalculatorUrl = process.env.INTEREST_CALCULATOR || 'http://localhost:7001';
+
 const proxyOptions = {
-  target: 'http://localhost:7001',
+  target: interestCalculatorUrl,
   pathRewrite: {
     '^/interest': ''
   },
   router: {
-    '/interest': 'http://localhost:7001'
+    '/interest': interestCalculatorUrl
   }
 }
 
