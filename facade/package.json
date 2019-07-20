@@ -5,7 +5,8 @@
   "author": "Yonatan Kreiner <yonatankreiner@gmail.com>",
   "license": "MIT",
   "engines": {
-    "node": "10.16.x"
+    "node": "10.16.0",
+    "npm": "6.9.0"
   },
   "scripts": {
     "start": "node index.js",
