@@ -1,7 +1,7 @@
 const xlsx = require('node-xlsx');
 
 const getExcel = () => {
-    const path = './assets/actuar2.xlsx';
+    const path = './assets/actuar.xlsx';
     return xlsx.parse(path);
 }
 
