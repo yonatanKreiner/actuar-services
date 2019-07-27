@@ -10,7 +10,8 @@
   },
   "scripts": {
     "start": "node index.js",
-    "start:dev": "nodemon index.js --inspect"
+    "start:dev": "nodemon index.js --inspect",
+    "deploy": "git subtree push --prefix interest-calculator heroku-interest master"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
