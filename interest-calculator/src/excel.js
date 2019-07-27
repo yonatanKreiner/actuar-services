@@ -1,15 +1,15 @@
 const xlsx = require('node-xlsx');
 
 const getExcel = () => {
-    const path = './assets/actuar.xlsx';
+    const path = './assets/actuar2.xlsx';
     return xlsx.parse(path);
 }
 
 const sheets = {
-    work: 0,
-    yearlyInterests: 1,
-    madadsAndInterests: 2,
-    dailyInterests: 3,
+    work: 2,
+    yearlyInterests: 3,
+    madadsAndInterests: 4,
+    dailyInterests: 5,
 }
 
 const columns = {

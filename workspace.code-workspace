@@ -1,0 +1,38 @@
+{
+	"folders": [
+		{
+			"path": "facade"
+		},
+		{
+			"path": "interest-calculator",
+			"name": "interest"
+		}
+	],
+	"settings": {
+	},
+	"launch": {
+		"configurations": [
+			{
+				"type": "node",
+				"request": "launch",
+				"name": "Launch Facade",
+				"program": "${workspaceFolder:facade}/index.js"
+			},
+			{
+				"type": "node",
+				"request": "launch",
+				"name": "Launch Interest",
+				"program": "${workspaceFolder:interest}/index.js"
+			}
+		],
+		"compounds": [
+			{
+				"name": "Compound",
+				"configurations": [
+					"Launch Facade",
+					"Launch Interest"
+				]
+			}
+		]
+	}
+}
