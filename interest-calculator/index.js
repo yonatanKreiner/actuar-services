@@ -18,6 +18,7 @@ app.set('name', 'interest calculator')
 app.post('/', (req, res) => {
   const date = req.body.calculationDate;
   const debts = req.body.debts;
+  const isLegalInterest = req.body.isLegalInterest;
 
   res.send({ finalDebt: calculate(date, debts) });
 });
