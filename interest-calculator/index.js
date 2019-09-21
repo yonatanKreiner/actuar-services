@@ -20,7 +20,7 @@ app.post('/', (req, res) => {
   const debts = req.body.debts;
   const isLegalInterest = req.body.isLegalInterest;
 
-  res.send({ finalDebt: calculate(date, debts) });
+  res.send({ finalDebt: calculate(date, debts, isLegalInterest) });
 });
 
 app.listen(app.get('port'), () => {

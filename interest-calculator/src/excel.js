@@ -1,8 +1,7 @@
 const xlsx = require('node-xlsx');
 
-const getExcel = () => {
-    const path = './assets/actuar-legal-interest.xlsx';
-    return xlsx.parse(path);
+const getExcel = (xlsPath) => {
+    return xlsx.parse(xlsPath);
 }
 
 const sheets = {
@@ -45,12 +44,13 @@ const getInterestRow = date => {
     return daysDifference + firstInterest.row;
 }
 
-const getInterestByDate = date => {
-    const worksheet = excel[sheets.work]
+const getInterestByDate = (date, isLegalInterest = true) => {
+    const worksheet = isLegalInterest ? excel[sheets.work] : excelIlegaInterest[sheets.work];
     const row = getInterestRow(date);
     return worksheet.data[row][columns.interest];
 }
 
-const excel = getExcel();
+const excel = getExcel('./assets/actuar-legal-interest.xlsx');
+const excelIlegaInterest = getExcel('./assets/actuar-illegal-interest.xlsx');
 
 module.exports = { getMadadByDate, getInterestByDate }
