@@ -15,12 +15,14 @@ app.use(bodyParser.json());
 app.set('port', (process.env.PORT || 7001));
 app.set('name', 'interest calculator')
 
-app.post('/', (req, res) => {
+app.post('/', async (req, res) => {
   const date = req.body.calculationDate;
   const debts = req.body.debts;
   const isLegalInterest = req.body.isLegalInterest;
 
-  res.send({ finalDebt: calculate(date, debts, isLegalInterest) });
+  const finalDebt = await calculate(date, debts, isLegalInterest);
+
+  res.send({ finalDebt });
 });
 
 app.listen(app.get('port'), () => {

@@ -1,18 +1,12 @@
-const excel = require('./excel');
+const axios = require('axios');
 
-const indexate = (value, madadStart, madadEnd) => {
-    return (madadEnd / madadStart * value - value);
+const getIndexate = async (value, startDate, endDate) => {
+    const startdateString =  `${startDate.getMonth() + 1}-${startDate.getDate()}-${startDate.getFullYear()}`
+    const enddateString =  `${endDate.getMonth() + 1}-${endDate.getDate()}-${endDate.getFullYear()}`
+    const res = await axios.get(`https://api.cbs.gov.il/index/data/calculator/120010?value=${Math.trunc(value)}&date=${startdateString}&toDate=${enddateString}&format=json&download=false`)
+    const result = res.data.answer.to_value;
+
+    return result;
 }
 
-const getMadadByDate = date => {
-    const monthDeduction = date.getDate() < 15 ? 2 : 1;
-    date.setMonth(date.getMonth() - monthDeduction)
-
-    return getMadadByMonth(date);
-};
-
-const getMadadByMonth = date => {
-    return excel.getMadadByDate(date)
-};
-
-module.exports =  {indexate, getMadadByDate};
+module.exports =  {getIndexate};

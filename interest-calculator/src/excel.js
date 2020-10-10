@@ -50,7 +50,7 @@ const getInterestByDate = (date, isLegalInterest = true) => {
     return worksheet.data[row][columns.interest];
 }
 
-const excel = getExcel('./assets/actuar-legal-interest.xlsx');
-const excelIlegaInterest = getExcel('./assets/actuar-illegal-interest.xlsx');
+const excel = getExcel("C:/Users/Ofir Elarat/Documents/Actuar/actuar-services/interest-calculator/assets/actuar-legal-interest.xlsx"); // getExcel(`./assets/actuar-legal-interest.xlsx`); 
+const excelIlegaInterest = getExcel("C:/Users/Ofir Elarat/Documents/Actuar/actuar-services/interest-calculator/assets/actuar-illegal-interest.xlsx"); //getExcel('./assets/actuar-illegal-interest.xlsx');
 
 module.exports = { getMadadByDate, getInterestByDate }

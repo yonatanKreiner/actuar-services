@@ -1,25 +1,22 @@
 const moment = require('moment');
 
-const {indexate, getMadadByDate} = require('./madad');
+const {getIndexate} = require('./madad');
 const getInterestDifferences = require('./interest');
 
-const calculate = (date, debts, isLegalInterest) => {
-    const finalDebt = (debts.map(debt => addExtra(date, debt, isLegalInterest)))
-        .reduce((a, b) => a + b, 0);
+const calculate = async (date, debts, isLegalInterest) => {
+    const allDepts = Promise.all(debts.map(async (debt) => await addExtra(date, debt, isLegalInterest)));
+    const finalDebt = (await allDepts).reduce((a, b) => a + b, 0);
 
     return finalDebt;
 };
 
-const addExtra = (date, debt, isLegalInterest) => {
+const addExtra = async (date, debt, isLegalInterest) => {
     const interestDifference = getInterestDifferences(moment(debt.date, 'DD/MM/YYYY').toDate(), debt.sum, isLegalInterest);
-    
-    const madadStart = getMadadByDate(moment(debt.date, 'DD/MM/YYYY').toDate());
-    const madadEnd = getMadadByDate(moment(date, 'DD/MM/YYYY').toDate());
-    
-    const madadDifference = indexate(debt.sum, madadStart, madadEnd);
-    const hazmadaRibit = indexate(interestDifference, madadStart, madadEnd);
 
-    return debt.sum + madadDifference + interestDifference + hazmadaRibit;
+    const hazmadaMadad = await getIndexate(debt.sum, moment(debt.date, 'DD/MM/YYYY').toDate(), moment(date, 'DD/MM/YYYY').toDate());
+    const hazmadaRibit = await getIndexate(interestDifference,  moment(debt.date, 'DD/MM/YYYY').toDate(), moment(date, 'DD/MM/YYYY').toDate());
+
+    return debt.sum + hazmadaMadad + interestDifference + hazmadaRibit;
 };
 
 module.exports = calculate;
