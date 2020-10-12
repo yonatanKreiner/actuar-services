@@ -9,7 +9,7 @@ const getIndexate = async (value, startDate, endDate) => {
     const res = await axios.get(`https://api.cbs.gov.il/index/data/calculator/120010?value=${Math.trunc(value)}&date=${startdateString}&toDate=${enddateString}&format=json&download=false`)
     const result = res.data.answer.to_value;
 
-    return result;
+    return result - value;
 }
 
 module.exports =  {getIndexate};
