@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const calculate = require('./src/calculation');
+const interestCalculate = require('./src/interestCalculation');
+const calculateAlimonyPayments = require('./src/alimonyPaymentsCalculation');
 
 const app = express();
 
@@ -20,9 +21,19 @@ app.post('/', async (req, res) => {
   const debts = req.body.debts;
   const isLegalInterest = req.body.isLegalInterest;
 
-  const finalDebt = await calculate(date, debts, isLegalInterest);
+  const finalDebt = await interestCalculate(date, debts, isLegalInterest);
 
   res.send({ finalDebt });
+});
+
+app.post('/alimonyPayment', async (req, res) => {
+  const children = req.body.children;
+  const madadIndexateInterval = req.body.madadIndexateInterval;
+  const startPaymentDate = req.body.startPaymentDate;
+
+  const payments = calculateAlimonyPayments(children, madadIndexateInterval, startPaymentDate);
+
+  res.send({payments});
 });
 
 app.listen(app.get('port'), () => {

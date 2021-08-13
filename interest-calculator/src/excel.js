@@ -68,7 +68,9 @@ const recursiveDailyInterestFromDate = (date, isLegalInteres) => {
 
 // const excel = getExcel("C:/Users/Ofir Elarat/Documents/Actuar/actuar-services/interest-calculator/assets/actuar-legal-interest.xlsx"); // getExcel(`./assets/actuar-legal-interest.xlsx`); 
 // const excelIlegaInterest = getExcel("C:/Users/Ofir Elarat/Documents/Actuar/actuar-services/interest-calculator/assets/actuar-illegal-interest.xlsx"); //getExcel('./assets/actuar-illegal-interest.xlsx');
-const interestsExcel = getExcel("./assets/interets.xlsx"); //getExcel("C:/Users/Ofir Elarat/Documents/Actuar/actuar-services/interest-calculator/assets/interets.xlsx");
-const illeagalInterestsExcel = getExcel("./assets/illegal-interests.xlsx"); //getExcel("C:/Users/Ofir Elarat/Documents/Actuar/actuar-services/interest-calculator/assets/illegal-interests.xlsx");
+// const interestsExcel = getExcel("./assets/interets.xlsx"); 
+const interestsExcel = getExcel("C:/Users/Ofir Elarat/Documents/Actuar/actuar-services/interest-calculator/assets/interets.xlsx");
+// const illeagalInterestsExcel = getExcel("./assets/illegal-interests.xlsx");
+const illeagalInterestsExcel = getExcel("C:/Users/Ofir Elarat/Documents/Actuar/actuar-services/interest-calculator/assets/illegal-interests.xlsx");
 
 module.exports = { getInterestByDate, recursiveDailyInterestFromDate }

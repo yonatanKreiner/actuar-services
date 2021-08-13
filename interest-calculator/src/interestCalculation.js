@@ -3,7 +3,7 @@ const moment = require('moment');
 const {getIndexate} = require('./madad');
 const getInterestDifferences = require('./interest');
 
-const calculate = async (date, debts, isLegalInterest) => {
+const interestCalculate = async (date, debts, isLegalInterest) => {
     const allDepts = Promise.all(debts.map(async (debt) => await addExtra(date, debt, isLegalInterest)));
     const finalDebt = (await allDepts).reduce((a, b) => a + b, 0);
 
@@ -19,4 +19,4 @@ const addExtra = async (date, debt, isLegalInterest) => {
     return debt.sum + hazmadaMadad + interestDifference + hazmadaRibit;
 };
 
-module.exports = calculate;
+module.exports = interestCalculate;
