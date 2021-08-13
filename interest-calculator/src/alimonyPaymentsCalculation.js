@@ -19,8 +19,9 @@ const calculateAlimonyPayments = (children, madadIndexateInterval, startPaymentD
                 return total + 0;
             }
         }, 0);
+
+        monthlyPayments.push({date: moment(cureentPaymentDate).format("MM-YYYY"), payment: monthPayment});
         cureentPaymentDate = new Date(cureentPaymentDate.setMonth(cureentPaymentDate.getMonth()+1));
-        monthlyPayments.push(monthPayment);
     }
 
     return monthlyPayments;
