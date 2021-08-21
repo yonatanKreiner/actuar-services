@@ -1,19 +1,31 @@
 const moment = require('moment');
+const {getIndexate} = require('./madad');
 
-const calculateAlimonyPayments = (children, madadIndexateInterval, startPaymentDate) => {
+
+const calculateAlimonyPayments = async (children, madadIndexateInterval, startPaymentDate) => {
+    const startdatePayment = new Date(startPaymentDate); 
+ 
     let doneCalcChildrenPayments = children.map(child => false);
 
     let cureentPaymentDate = new Date(startPaymentDate);
     const monthlyPayments = [];
 
     while(doneCalcChildrenPayments.some(x => x === false)){
-        const monthPayment = children.reduce((total,child, index) => {
+        const monthPayment = await children.reduce(async (total,child, index) => {
             const childAge = getAge(moment(child.birthDate, 'DD/MM/YYYY').toDate(), cureentPaymentDate);
             if(childAge < 18){
-                return total + child.sum;
+                let childPaymentSum = child.sum;
+
+                childPaymentSum = await indexateMadad(monthlyPayments, childPaymentSum, madadIndexateInterval, startdatePayment, cureentPaymentDate);
+
+                return total + childPaymentSum;
             }else if((child.gender === "male" && childAge<21) ||
                      (child.gender === "female" && childAge<20)){
-                return total + (child.sum * child.adultPrecent);
+                let childPaymentSum = child.sum * child.adultPrecent;
+                
+                childPaymentSum = await indexateMadad(monthlyPayments, childPaymentSum, madadIndexateInterval, startdatePayment, cureentPaymentDate);
+
+                return total + childPaymentSum;
             }else{
                 doneCalcChildrenPayments[index] = true;
                 return total + 0;
@@ -37,5 +49,14 @@ const getAge = (birthDate, paymentDate) => {
     return age;
 }
 
+const indexateMadad = async (monthlyPayments, childPaymentSum, madadIndexateInterval, startdatePayment, cureentPaymentDate) => {
+    if((monthlyPayments.length+1) % madadIndexateInterval == 0 && monthlyPayments.length > 0){
+        childPaymentSum = await getIndexate(childPaymentSum, startdatePayment, cureentPaymentDate) + childPaymentSum;
+    }else if(monthlyPayments.length > 0){
+        childPaymentSum = monthlyPayments[monthlyPayments.length - 1].payment;
+    }
+
+    return childPaymentSum;
+}
 
 module.exports = calculateAlimonyPayments;

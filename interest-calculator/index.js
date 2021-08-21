@@ -31,7 +31,7 @@ app.post('/alimonyPayment', async (req, res) => {
   const madadIndexateInterval = req.body.madadIndexateInterval;
   const startPaymentDate = req.body.startPaymentDate;
 
-  const payments = calculateAlimonyPayments(children, madadIndexateInterval, startPaymentDate);
+  const payments = await calculateAlimonyPayments(children, madadIndexateInterval, startPaymentDate);
 
   res.send({payments});
 });
