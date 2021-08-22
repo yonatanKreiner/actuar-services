@@ -44,7 +44,7 @@ const calculateAlimonyPayments = async (children, madadIndexateInterval, startPa
     }
 
     const totalMonthlyPayments = monthlyPayments.map(({date, payments}) => 
-                                        ({date, payment: payments.reduce((total,payment) => total + payment, 0)}));
+                                        ({date, payment: payments.reduce((total,payment) => parseInt(total + payment), 0)}));
 
     return totalMonthlyPayments;
 }
