@@ -8,7 +8,7 @@ const getIndexate = async (value, startDate, endDate) => {
     const enddateString =  `${endDate.getMonth() + 1}-${endDate.getDate()}-${endDate.getFullYear()}`
     let result; 
     try {
-        const res = await axios.get(`https://api.cbs.gov.il/index/data/calculator/120010?value=${Math.trunc(value)}&date=${startdateString}&toDate=${enddateString}&format=json&download=false`)
+        const res = await axios.get(`https://api.cbs.gov.il/index/data/calculator/120010?value=${value.toFixed(4)}&date=${startdateString}&toDate=${enddateString}&format=json&download=false`)
         result = res.data.answer.to_value;
     }catch {
         console.log(`failed calculate indexate ${startdateString} - ${enddateString}`);

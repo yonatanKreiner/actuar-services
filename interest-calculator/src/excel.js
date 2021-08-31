@@ -50,8 +50,8 @@ const getInterestByDate = (date, isLegalInterest = true) => {
 }
 
 
-const recursiveDailyInterestFromDate = (date, isLegalInteres) => {
-    const today = new Date();
+const recursiveDailyInterestFromDate = (endDate, date, isLegalInteres) => {
+    const today = new Date(endDate);
     let totalRecursiveInterest = 1;
 
     while(today > date){
