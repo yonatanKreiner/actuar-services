@@ -6,7 +6,7 @@ const excel = require('./excel');
 const getInterestDifferences = (endDate, debtDate, debt, isLegalInterest) => {
     const accumulativeInterest = excel.recursiveDailyInterestFromDate(endDate, debtDate, debt, isLegalInterest);
     
-    return (accumulativeInterest * debt - debt);
+    return (accumulativeInterest.toFixed(6) * debt - debt);
 }
 
 module.exports = getInterestDifferences;
