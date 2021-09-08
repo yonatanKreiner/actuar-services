@@ -15,8 +15,9 @@ const columns = {
 }
 
 const convertToDailyInterest = (value) => {
-    const dailyInterest = Math.pow((1 + value/100),(1/365.25));
-
+    // const dailyInterest = Math.pow((1 + value/100),(1/365.25));
+    const dailyInterest = Math.pow((1 + value/100),(1/365.2));
+ 
     return dailyInterest;
 }
 
@@ -58,9 +59,6 @@ const recursiveDailyInterestFromDate = (endDate, date, isLegalInteres) => {
         totalRecursiveInterest = totalRecursiveInterest * getInterestByDate(today, isLegalInteres)
 
         today.setDate(today.getDate() - 1);
-        if(today < date){
-            break;
-        }
     }
 
     return totalRecursiveInterest;

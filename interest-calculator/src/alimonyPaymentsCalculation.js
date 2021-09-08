@@ -37,7 +37,6 @@ const calculateAlimonyPayments = async (children, madadIndexateInterval, startPa
         });
 
         const monthPayments = (await Promise.all(childrenMonthPayment));
-                                //.reduce((total, childPayment) => childPayment + total, 0);
 
         monthlyPayments.push({date: moment(cureentPaymentDate).format("MM-YYYY"), payments: monthPayments});
         cureentPaymentDate = new Date(cureentPaymentDate.setMonth(cureentPaymentDate.getMonth()+1));

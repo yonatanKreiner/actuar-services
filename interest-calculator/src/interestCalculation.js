@@ -14,8 +14,8 @@ const addExtra = async (date, debt, isLegalInterest) => {
     const debtDate = moment(debt.date, 'DD/MM/YYYY').toDate();
     const paymentDate = moment(date, 'DD/MM/YYYY').toDate();
 
-    debtDate.setDate(debtDate.getDate() - 1);
-    paymentDate.setDate(paymentDate.getDate() + 1);
+    // debtDate.setDate(debtDate.getDate() - 1);
+    // paymentDate.setDate(paymentDate.getDate() + 1);
 
     const interestDifference = getInterestDifferences(paymentDate, new Date(debtDate), debt.sum, isLegalInterest);
 
