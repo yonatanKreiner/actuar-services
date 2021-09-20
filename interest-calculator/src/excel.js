@@ -14,9 +14,11 @@ const columns = {
     interest: 1
 }
 
-const convertToDailyInterest = (value) => {
-    // const dailyInterest = Math.pow((1 + value/100),(1/365.25));
-    const dailyInterest = Math.pow((1 + value/100),(1/365.2));
+const convertToDailyInterest = (value, year) => {
+    const isLeapYear = year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0);
+    const daysInYear = isLeapYear ? 366 : 365;
+    // const dailyInterest = Math.pow((1 + value/100),(1/365.205));
+    const dailyInterest = Math.pow((1 + value/100),(1/daysInYear));
  
     return dailyInterest;
 }
@@ -45,8 +47,8 @@ const getInterestByDate = (date, isLegalInterest = true) => {
         }
     }
 
-    const dailyInterest = convertToDailyInterest(worksheet.data[i][columns.interest]);
-
+    const dailyInterest = convertToDailyInterest(worksheet.data[i][columns.interest], date.getFullYear());
+    
     return dailyInterest;
 }
 
