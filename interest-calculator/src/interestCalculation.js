@@ -13,10 +13,7 @@ const interestCalculate = async (date, debts, isLegalInterest) => {
 const addExtra = async (date, debt, isLegalInterest) => {
     const debtDate = moment(debt.date, 'DD/MM/YYYY').toDate();
     const paymentDate = moment(date, 'DD/MM/YYYY').toDate();
-
-    // debtDate.setDate(debtDate.getDate() - 1);
-    // paymentDate.setDate(paymentDate.getDate() + 1);
-
+    
     const interestDifference = getInterestDifferences(new Date(paymentDate), new Date(debtDate), debt.sum, isLegalInterest);
 
     const hazmadaMadad = await getIndexate(debt.sum, debtDate, paymentDate);

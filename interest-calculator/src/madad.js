@@ -7,7 +7,7 @@ const getIndexate = async (value, startDate, endDate) => {
     const startdateString =  `${startDate.getMonth() + 1}-${startDate.getDate()}-${startDate.getFullYear()}`
     const enddateString =  `${endDate.getMonth() + 1}-${endDate.getDate()}-${endDate.getFullYear()}`
     
-    const valueToCalc = value.toFixed(3) > value ? value.toFixed(3) : value  == value.toFixed(3) ? value : value.toFixed(2)
+    const valueToCalc = value.toFixed(5) > value ? value.toFixed(5) : value  == value.toFixed(5) ? value : value.toFixed(2)
     
     let result;
     try {
