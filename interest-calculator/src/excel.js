@@ -15,11 +15,10 @@ const columns = {
 }
 
 const convertToDailyInterest = (value, year) => {
-    // const isLeapYear = year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0);
-    // const daysInYear = isLeapYear ? 366 : 365;
-    const dailyInterest = Math.pow((1 + value/100),(1/365.2425));
-    // const dailyInterest = 1 + (value/100*(1/365.2468));
-    // const dailyInterest = Math.pow((1 + value/100),(1/365.25));
+    const isLeapYear = year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0);
+    const daysInYear = isLeapYear ? 366 : 365;
+    // const dailyInterest = Math.pow((1 + value/100),(1/365.2425));
+    const dailyInterest = 1 + ((value/100)*(1/daysInYear));
     // const dailyInterest = Math.pow((1 + value/100),(1/daysInYear));
  
     return dailyInterest;
@@ -61,7 +60,7 @@ const recursiveDailyInterestFromDate = (endDate, date, isLegalInteres) => {
 
     while(today > date){
         const daylyInterest = getInterestByDate(today, isLegalInteres);
-        totalRecursiveInterest = (totalRecursiveInterest)*(daylyInterest);
+        totalRecursiveInterest = daylyInterest * totalRecursiveInterest ;
         console.log("d * x = " + totalRecursiveInterest);
 
         today.setDate(today.getDate() - 1);
