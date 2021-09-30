@@ -14,11 +14,17 @@ const columns = {
     interest: 1
 }
 
-const convertToDailyInterest = (value, year) => {
+const amountOfDaysInYear = (year) => {
     const isLeapYear = year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0);
     const daysInYear = isLeapYear ? 366 : 365;
+
+    return daysInYear;
+} 
+
+const convertToDailyInterest = (value, year) => {
     // const dailyInterest = Math.pow((1 + value/100),(1/365.2425));
-    const dailyInterest = 1 + ((value/100)*(1/daysInYear));
+    const dailyInterest = (value/100/amountOfDaysInYear(year));
+    // const dailyInterest = 1 + ((value/100)*(1/daysInYear));
     // const dailyInterest = Math.pow((1 + value/100),(1/daysInYear));
  
     return dailyInterest;
@@ -53,18 +59,38 @@ const getInterestByDate = (date, isLegalInterest = true) => {
     return dailyInterest;
 }
 
-
 const recursiveDailyInterestFromDate = (endDate, date, isLegalInteres) => {
     const today = new Date(endDate);
     let totalRecursiveInterest = 1;
+    const yearlySumInterest = [];
+    let currentYearInterest = 0;
+
+    const yearBefore = new Date(today);
+    yearBefore.setDate(yearBefore.getDate() - amountOfDaysInYear(yearBefore.getFullYear()));
 
     while(today > date){
         const daylyInterest = getInterestByDate(today, isLegalInteres);
-        totalRecursiveInterest = daylyInterest * totalRecursiveInterest ;
-        console.log("d * x = " + totalRecursiveInterest);
+        // totalRecursiveInterest = daylyInterest * totalRecursiveInterest ;
+
+        if((today.getDate() === yearBefore.getDate() && 
+            today.getMonth() === yearBefore.getMonth() &&
+            today.getFullYear() === yearBefore.getFullYear())) {
+            yearlySumInterest.push(currentYearInterest)
+            currentYearInterest = daylyInterest;
+            yearBefore.setDate(yearBefore.getDate() - amountOfDaysInYear(yearBefore.getFullYear()));
+        }else if(today.getDate()-1 === date.getDate() && 
+                    today.getMonth() === date.getMonth() &&
+                    today.getFullYear() === date.getFullYear()) {
+                        currentYearInterest += daylyInterest;
+                        yearlySumInterest.push(currentYearInterest)
+        } else {
+            currentYearInterest += daylyInterest;
+        }
 
         today.setDate(today.getDate() - 1);
     }
+
+    totalRecursiveInterest = yearlySumInterest.reduce((totalInterest, yearlySumInterest) => totalInterest * (1 + yearlySumInterest), 1);
 
     return totalRecursiveInterest;
 }
