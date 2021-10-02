@@ -70,19 +70,20 @@ const recursiveDailyInterestFromDate = (endDate, date, isLegalInteres) => {
 
     while(today > date){
         const daylyInterest = getInterestByDate(today, isLegalInteres);
+        const yesterday = new Date(today);
+        yesterday.setDate(yesterday.getDate() - 1);
         // totalRecursiveInterest = daylyInterest * totalRecursiveInterest ;
 
-        if((today.getDate() === yearBefore.getDate() && 
+        if(yesterday <= date) {
+            currentYearInterest += daylyInterest;
+            yearlySumInterest.push(currentYearInterest)
+        } else if((today.getDate() === yearBefore.getDate() && 
             today.getMonth() === yearBefore.getMonth() &&
             today.getFullYear() === yearBefore.getFullYear())) {
+            currentYearInterest += daylyInterest;
             yearlySumInterest.push(currentYearInterest)
-            currentYearInterest = daylyInterest;
+            currentYearInterest = 0;
             yearBefore.setDate(yearBefore.getDate() - amountOfDaysInYear(yearBefore.getFullYear()));
-        }else if(today.getDate()-1 === date.getDate() && 
-                    today.getMonth() === date.getMonth() &&
-                    today.getFullYear() === date.getFullYear()) {
-                        currentYearInterest += daylyInterest;
-                        yearlySumInterest.push(currentYearInterest)
         } else {
             currentYearInterest += daylyInterest;
         }

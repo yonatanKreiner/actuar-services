@@ -19,7 +19,7 @@ const addExtra = async (date, debt, isLegalInterest) => {
     const hazmadaMadad = await getIndexate(debt.sum, debtDate, paymentDate);
     const hazmadaRibit = await getIndexate(interestDifference, debtDate, paymentDate);
 
-    return debt.sum + hazmadaMadad + interestDifference +hazmadaRibit;
+    return debt.sum + hazmadaMadad + interestDifference + hazmadaRibit;
 };
 
 module.exports = interestCalculate;
