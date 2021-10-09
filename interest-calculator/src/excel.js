@@ -60,35 +60,35 @@ const getInterestByDate = (date, isLegalInterest = true) => {
 }
 
 const recursiveDailyInterestFromDate = (endDate, date, isLegalInteres) => {
-    const today = new Date(endDate);
+    const today = new Date(date);
     let totalRecursiveInterest = 1;
     const yearlySumInterest = [];
     let currentYearInterest = 0;
 
-    const yearBefore = new Date(today);
-    yearBefore.setDate(yearBefore.getDate() - amountOfDaysInYear(yearBefore.getFullYear()));
+    const nextYear = new Date(today);
+    nextYear.setDate(nextYear.getDate() + amountOfDaysInYear(nextYear.getFullYear()));
 
-    while(today > date){
+    while(today < endDate){
         const daylyInterest = getInterestByDate(today, isLegalInteres);
-        const yesterday = new Date(today);
-        yesterday.setDate(yesterday.getDate() - 1);
+        const tommorow = new Date(today);
+        tommorow.setDate(tommorow.getDate() + 1);
         // totalRecursiveInterest = daylyInterest * totalRecursiveInterest ;
 
-        if(yesterday <= date) {
+        if(tommorow >= endDate) {
             currentYearInterest += daylyInterest;
             yearlySumInterest.push(currentYearInterest)
-        } else if((today.getDate() === yearBefore.getDate() && 
-            today.getMonth() === yearBefore.getMonth() &&
-            today.getFullYear() === yearBefore.getFullYear())) {
+        } else if((today.getDate() === nextYear.getDate() && 
+                    today.getMonth() === nextYear.getMonth() &&
+                    today.getFullYear() === nextYear.getFullYear())) {
             currentYearInterest += daylyInterest;
             yearlySumInterest.push(currentYearInterest)
             currentYearInterest = 0;
-            yearBefore.setDate(yearBefore.getDate() - amountOfDaysInYear(yearBefore.getFullYear()));
+            nextYear.setDate(nextYear.getDate() + amountOfDaysInYear(nextYear.getFullYear()));
         } else {
             currentYearInterest += daylyInterest;
         }
 
-        today.setDate(today.getDate() - 1);
+        today.setDate(today.getDate() + 1);
     }
 
     totalRecursiveInterest = yearlySumInterest.reduce((totalInterest, yearlySumInterest) => totalInterest * (1 + yearlySumInterest), 1);
@@ -99,8 +99,8 @@ const recursiveDailyInterestFromDate = (endDate, date, isLegalInteres) => {
 // const excel = getExcel("C:/Users/Ofir Elarat/Documents/Actuar/actuar-services/interest-calculator/assets/actuar-legal-interest.xlsx"); // getExcel(`./assets/actuar-legal-interest.xlsx`); 
 // const excelIlegaInterest = getExcel("C:/Users/Ofir Elarat/Documents/Actuar/actuar-services/interest-calculator/assets/actuar-illegal-interest.xlsx"); //getExcel('./assets/actuar-illegal-interest.xlsx');
 const interestsExcel = getExcel("./assets/interest.xlsx"); 
-// const interestsExcel = getExcel("C:/Users/Ofir Elarat/Documents/Actuar/actuar-services/interest-calculator/assets/interest.xlsx");
+// const interestsExcel = getExcel("C://Users//ofir//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//interest.xlsx");
 const illeagalInterestsExcel = getExcel("./assets/illegal-interest.xlsx");
-// const illeagalInterestsExcel = getExcel("C:/Users/Ofir Elarat/Documents/Actuar/actuar-services/interest-calculator/assets/illegal-interest.xlsx");
+// const illeagalInterestsExcel = getExcel("C://Users//ofir//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//illegal-interest.xlsx");
 
 module.exports = { getInterestByDate, recursiveDailyInterestFromDate }
