@@ -6,9 +6,8 @@ const getInterestDifferences = require('./interest');
 const interestCalculate = async (date, debts, isLegalInterest) => {
     const allDepts = Promise.all(debts.map(async (debt) => await addExtra(date, debt, isLegalInterest)));
     const allDebtsResults = await allDepts;
-    const finalDebt = allDebtsResults.reduce((debtsSum, debt) => debtsSum + debt.totalDebt, 0);
 
-    return {total: finalDebt, allDepts: Object.values(allDebtsResults)};
+    return {allDepts: Object.values(allDebtsResults)};
 };
 
 const addExtra = async (date, debt, isLegalInterest) => {
@@ -21,11 +20,11 @@ const addExtra = async (date, debt, isLegalInterest) => {
     const hazmadaRibit = await getIndexate(interestDifference, debtDate, paymentDate);
 
     return {
-        totalDebt: parseFloat((debt.sum + hazmadaMadad + interestDifference + hazmadaRibit).toFixed(2)),
+        totalDebt: ((debt.sum + hazmadaMadad + interestDifference + hazmadaRibit).toLocaleString(undefined,{ minimumFractionDigits: 2 })),
         deptDate: debt.date,
-        debtSum: debt.sum,
-        indexateSum: hazmadaMadad.toFixed(2),
-        totalInterest: (interestDifference + hazmadaRibit).toFixed(2)
+        debtSum: debt.sum.toLocaleString(undefined,{ minimumFractionDigits: 2 }),
+        indexateSum: hazmadaMadad.toLocaleString(undefined,{ minimumFractionDigits: 2 }),
+        totalInterest: (interestDifference + hazmadaRibit).toLocaleString(undefined,{ minimumFractionDigits: 2 })
     };
 };
 
