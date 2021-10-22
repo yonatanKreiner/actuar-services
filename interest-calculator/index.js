@@ -17,11 +17,9 @@ app.set('port', (process.env.PORT || 7001));
 app.set('name', 'interest calculator')
 
 app.post('/', async (req, res) => {
-  const date = req.body.calculationDate;
-  const debts = req.body.debts;
-  const isLegalInterest = req.body.isLegalInterest;
+const debts = req.body.debts;
 
-  const finalDebt = await interestCalculate(date, debts, isLegalInterest);
+  const finalDebt = await interestCalculate(debts);
 
   res.send({ finalDebt });
 });
