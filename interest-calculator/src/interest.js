@@ -4,7 +4,6 @@ const excel = require('./excel');
 // https://ga.mof.gov.il/rate
 
 const getInterestDifferences = (endDate, debtDate, debt, isLegalInterest) => {
-    // debtDate.setDate(debtDate.getDate() - 1);
     endDate.setDate(endDate.getDate() - 1);
 
     const accumulativeInterest = excel.recursiveDailyInterestFromDate(endDate, debtDate, isLegalInterest);
