@@ -3,13 +3,11 @@ const {getIndexate} = require('./madad');
 
 
 const calculateAlimonyPayments = async (children, madadIndexateInterval, startPaymentDate) => {
-    // const startdatePayment = moment(startPaymentDate, 'DD/MM/YYYY').toDate();
     const startdatePayment = new Date(startPaymentDate);
  
     const doneCalcChildrenPayments = children.map(child => false);
     const isFirstMonthAfter18 =  children.map(child => true);
 
-    // let cureentPaymentDate = moment(startPaymentDate, 'DD/MM/YYYY').toDate();
     let cureentPaymentDate = new Date(startPaymentDate);
     const monthlyPayments = [];
     
