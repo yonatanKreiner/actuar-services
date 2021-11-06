@@ -2,8 +2,9 @@ const moment = require('moment');
 const {getIndexate} = require('./madad');
 
 
-const calculateAlimonyPayments = async (children, madadIndexateInterval, startPaymentDate) => {
+const calculateAlimonyPayments = async (children, madadIndexateInterval, startPaymentDate, endPaymentDate) => {
     const startdatePayment = new Date(startPaymentDate);
+    const enddatePayment = new Date(endPaymentDate);
  
     const doneCalcChildrenPayments = children.map(child => false);
     const isFirstMonthAfter18 =  children.map(child => true);
@@ -12,7 +13,7 @@ const calculateAlimonyPayments = async (children, madadIndexateInterval, startPa
     const monthlyPayments = [];
     
 
-    while(doneCalcChildrenPayments.some(x => x === false)){
+    while(doneCalcChildrenPayments.some(x => x === false) && cureentPaymentDate <= enddatePayment){
         const childrenMonthPayment = await children.map(async (child, index) => {
             const childAge = getAge(new Date(child.birthDate), cureentPaymentDate);
             if(childAge < 18){
