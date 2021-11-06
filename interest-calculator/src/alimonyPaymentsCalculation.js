@@ -3,18 +3,20 @@ const {getIndexate} = require('./madad');
 
 
 const calculateAlimonyPayments = async (children, madadIndexateInterval, startPaymentDate) => {
-    const startdatePayment = moment(startPaymentDate, 'DD/MM/YYYY').toDate();
+    // const startdatePayment = moment(startPaymentDate, 'DD/MM/YYYY').toDate();
+    const startdatePayment = new Date(startPaymentDate);
  
     const doneCalcChildrenPayments = children.map(child => false);
     const isFirstMonthAfter18 =  children.map(child => true);
 
-    let cureentPaymentDate = moment(startPaymentDate, 'DD/MM/YYYY').toDate();
+    // let cureentPaymentDate = moment(startPaymentDate, 'DD/MM/YYYY').toDate();
+    let cureentPaymentDate = new Date(startPaymentDate);
     const monthlyPayments = [];
     
 
     while(doneCalcChildrenPayments.some(x => x === false)){
         const childrenMonthPayment = await children.map(async (child, index) => {
-            const childAge = getAge(moment(child.birthDate, 'DD/MM/YYYY').toDate(), cureentPaymentDate);
+            const childAge = getAge(new Date(child.birthDate), cureentPaymentDate);
             if(childAge < 18){
                 let childPaymentSum = parseInt(child.sum);
 
