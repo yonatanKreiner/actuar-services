@@ -11,9 +11,7 @@ const interestCalculate = async (debts) => {
 };
 
 const addExtra = async (debt) => {
-    // const debtDate = moment(debt.startDate, 'DD/MM/YYYY').toDate();
     const debtDate = new Date(debt.startDate);
-    // const paymentDate = moment(debt.endDate, 'DD/MM/YYYY').toDate();
     const paymentDate = new Date(debt.endDate);
     const debtSum = parseFloat(debt.sum);
     
