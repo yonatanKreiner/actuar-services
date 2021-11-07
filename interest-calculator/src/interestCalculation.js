@@ -15,7 +15,7 @@ const addExtra = async (debt) => {
     const paymentDate = new Date(debt.endDate);
     const debtSum = parseFloat(debt.sum);
     
-    const interestDifference = getInterestDifferences(new Date(paymentDate), new Date(debtDate), debtSum, debt.isLegalInterest);
+    const interestDifference = getInterestDifferences(paymentDate, debtDate, debtSum, debt.isLegalInterest);
 
     const hazmadaMadad = await getIndexate(debtSum, debtDate, paymentDate);
     const hazmadaRibit = await getIndexate(interestDifference, debtDate, paymentDate);
