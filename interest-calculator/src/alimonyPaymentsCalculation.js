@@ -61,7 +61,7 @@ const getAge = (birthDate, paymentDate) => {
 }
 
 const indexateMadad = async (monthlyPayments, childPaymentSum, madadIndexateInterval, startdatePayment, cureentPaymentDate, childIndex, isFirstMonthAfter18 = false) => {
-    if((monthlyPayments.length+1) % madadIndexateInterval == 0 && monthlyPayments.length > 0){
+    if(monthlyPayments.length > 0 && (monthlyPayments.length) % madadIndexateInterval == 0){
         childPaymentSum = ((await getIndexate(childPaymentSum, startdatePayment, cureentPaymentDate))+ childPaymentSum);
     }else if(monthlyPayments.length > 0 && !isFirstMonthAfter18){
         childPaymentSum = monthlyPayments[monthlyPayments.length - 1].payments[childIndex];
