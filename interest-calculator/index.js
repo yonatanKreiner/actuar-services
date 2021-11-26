@@ -14,11 +14,11 @@ if (process.env.NODE_ENV === 'development') {
 
 const authPass = process.env.BASIC_AUTH_PASS || "admin";
 console.log("the authpass is " + authPass);
-// app.use(basicAuth({
-//   users: { "actuar" : authPass, "actuar": "actuar" },
-//   challenge: true,
-//   realm: 'Imb4T3st4pp',
-// }));
+app.use(basicAuth({
+  users: { "actuar" : authPass, "actuar": "actuar" },
+  challenge: true,
+  realm: 'Imb4T3st4pp',
+}));
 
 app.use(bodyParser.json());
 
