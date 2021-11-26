@@ -12,10 +12,9 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-const authUser = process.env.BASIC_AUTH_USER || "admin";
 const authPass = process.env.BASIC_AUTH_PASS || "admin";
 app.use(basicAuth({
-  users: { authUser : authPass, "actuar": "actuar" },
+  users: { "actuar" : authPass, "actuar": "actuar" },
   challenge: true,
 }));
 
