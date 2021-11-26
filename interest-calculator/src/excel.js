@@ -98,9 +98,9 @@ const recursiveDailyInterestFromDate = (endDate, date, isLegalInteres) => {
 
 // const excel = getExcel("C:/Users/Ofir Elarat/Documents/Actuar/actuar-services/interest-calculator/assets/actuar-legal-interest.xlsx"); // getExcel(`./assets/actuar-legal-interest.xlsx`); 
 // const excelIlegaInterest = getExcel("C:/Users/Ofir Elarat/Documents/Actuar/actuar-services/interest-calculator/assets/actuar-illegal-interest.xlsx"); //getExcel('./assets/actuar-illegal-interest.xlsx');
-// const interestsExcel = getExcel("./assets/interest.xlsx"); 
-const interestsExcel = getExcel("C://Users//ofir//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//interest.xlsx");
-// const illeagalInterestsExcel = getExcel("./assets/illegal-interest.xlsx");
-const illeagalInterestsExcel = getExcel("C://Users//ofir//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//illegal-interest.xlsx");
+const interestsExcel = getExcel("./assets/interest.xlsx"); 
+// const interestsExcel = getExcel("C://Users//ofir//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//interest.xlsx");
+const illeagalInterestsExcel = getExcel("./assets/illegal-interest.xlsx");
+// const illeagalInterestsExcel = getExcel("C://Users//ofir//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//illegal-interest.xlsx");
 
 module.exports = { getInterestByDate, recursiveDailyInterestFromDate }
