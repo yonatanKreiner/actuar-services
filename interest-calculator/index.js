@@ -20,7 +20,7 @@ app.set('name', 'interest calculator')
 const authPass = process.env.BASIC_AUTH_PASS || "admin";
 console.log("the authpass is " + authPass);
 app.use(basicAuth({
-  users: {  "actuar": "actuar" },
+  users: {  "actuar": authPass },
   challenge: true,
   realm: 'prod-actuar',
 }));
