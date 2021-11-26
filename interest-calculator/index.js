@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const basicAuth = require('express-basic-auth')
 
 const interestCalculate = require('./src/interestCalculation');
 const calculateAlimonyPayments = require('./src/alimonyPaymentsCalculation');
@@ -10,6 +11,13 @@ if (process.env.NODE_ENV === 'development') {
   const morgan = require('morgan');
   app.use(morgan('dev'));
 }
+
+const authUser = process.env.BASIC_AUTH_USER || "admin";
+const authPass = process.env.BASIC_AUTH_PASS || "admin";
+app.use(basicAuth({
+  users: { authUser : authPass },
+  challenge: true,
+}));
 
 app.use(bodyParser.json());
 
