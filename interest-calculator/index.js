@@ -12,18 +12,18 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-const authPass = process.env.BASIC_AUTH_PASS || "admin";
-console.log("the authpass is " + authPass);
-// app.use(basicAuth({
-//   users: { "actuar" : authPass, "actuar": "actuar" },
-//   challenge: true,
-//   realm: 'Imb4T3st4pp',
-// }));
-
 app.use(bodyParser.json());
 
 app.set('port', (process.env.PORT || 7001));
 app.set('name', 'interest calculator')
+
+const authPass = process.env.BASIC_AUTH_PASS || "admin";
+console.log("the authpass is " + authPass);
+app.use(basicAuth({
+  users: {  "actuar": "actuar" },
+  challenge: true,
+  realm: 'prod-actuar',
+}));
 
 app.post('/', async (req, res) => {
 const debts = req.body.debts;
