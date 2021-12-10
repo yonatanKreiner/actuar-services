@@ -11,6 +11,7 @@ const calculateAlimonyPayments = async (children, madadIndexateInterval, startPa
     const isFirstMonthAfter18 =  children.map(child => true);
 
     let cureentPaymentDate = new Date(startPaymentDate);
+    cureentPaymentDate.setDate(1);
     const monthlyPayments = [];
     
 
@@ -21,6 +22,7 @@ const calculateAlimonyPayments = async (children, madadIndexateInterval, startPa
                 let childPaymentSum = parseInt(child.sum);
 
                 childPaymentSum = await indexateMadad(monthlyPayments, childPaymentSum, madadIndexateInterval, baseindexateDate, cureentPaymentDate, index);
+                childPaymentSum = getMonthPaymentWithFractionInNeeded(startdatePayment, enddatePayment, cureentPaymentDate, childPaymentSum, parseInt(child.sum));
 
                 return childPaymentSum;
             }else if((child.gender === "male" && childAge<21) ||
@@ -28,7 +30,8 @@ const calculateAlimonyPayments = async (children, madadIndexateInterval, startPa
                 let childPaymentSum = parseInt(child.sum) * parseFloat(child.adultPrecent);
                 
                 childPaymentSum = await indexateMadad(monthlyPayments, childPaymentSum, madadIndexateInterval, baseindexateDate, cureentPaymentDate, index, isFirstMonthAfter18[index]);
-                
+                childPaymentSum = getMonthPaymentWithFractionInNeeded(startdatePayment, enddatePayment, cureentPaymentDate, childPaymentSum, parseInt(child.sum)*parseFloat(child.adultPrecent));
+
                 isFirstMonthAfter18[index] = false;
                 
                 return childPaymentSum;
@@ -68,6 +71,35 @@ const indexateMadad = async (monthlyPayments, childPaymentSum, madadIndexateInte
     }
 
     return childPaymentSum;
+}
+
+const getFractionPaymentFromMonthFromTheEnd = (date, paymentSum) => {
+    // using 0 as the day it will give us the last day of the prior month.
+    const daysInMonth = new Date(date.getFullYear(), date.getMonth()+1, 0).getDate();
+    return paymentSum * ((daysInMonth - (date.getDate()-1)) / daysInMonth);
+}
+
+const getFractionPaymentFromMonthFromStart = (date, paymentSum) => {
+    // using 0 as the day it will give us the last day of the prior month.
+    const daysInMonth = new Date(date.getFullYear(), date.getMonth()+1, 0).getDate();
+    return paymentSum * (date.getDate() / daysInMonth);
+}
+
+const getMonthPaymentWithFractionInNeeded = (startDate, endDate, currentDate, paymentSum, initialPament) => {
+    const secondMonth = new Date(startDate);
+    secondMonth.setMonth(secondMonth.getMonth()+1);
+    // is first or last payment
+    if(startDate.getMonth() == currentDate.getMonth() && startDate.getFullYear() == currentDate.getFullYear()){
+        return getFractionPaymentFromMonthFromTheEnd(startDate, paymentSum);
+    } else if(endDate.getMonth() == currentDate.getMonth() && endDate.getFullYear() == currentDate.getFullYear()){
+        return getFractionPaymentFromMonthFromStart(endDate, paymentSum);
+    }else if(secondMonth.getMonth() == currentDate.getMonth() && secondMonth.getFullYear() == currentDate.getFullYear()){
+        // for second month to not based on fraction month
+        return initialPament;
+    }
+    else {
+        return paymentSum;
+    }
 }
 
 module.exports = calculateAlimonyPayments;
