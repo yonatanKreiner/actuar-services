@@ -2,7 +2,7 @@ const moment = require('moment');
 const {getIndexate} = require('./madad');
 
 
-const calculateAlimonyPayments = async (children, madadIndexateInterval, startPaymentDate, endPaymentDate, baseIndexateDate) => {
+const calculateAlimonyPayments = async (children, madadIndexateInterval, startPaymentDate, endPaymentDate, baseIndexateDate, paymentDayInMonth) => {
     const startdatePayment = new Date(startPaymentDate);
     const enddatePayment = new Date(endPaymentDate);
     const baseindexateDate = new Date(baseIndexateDate);
@@ -21,7 +21,7 @@ const calculateAlimonyPayments = async (children, madadIndexateInterval, startPa
             if(childAge < 18){
                 let childPaymentSum = parseInt(child.sum);
 
-                childPaymentSum = await indexateMadad(monthlyPayments, childPaymentSum, madadIndexateInterval, baseindexateDate, cureentPaymentDate, index);
+                childPaymentSum = await indexateMadad(monthlyPayments, childPaymentSum, madadIndexateInterval, baseindexateDate, cureentPaymentDate, index, paymentDayInMonth);
                 childPaymentSum = getMonthPaymentWithFractionInNeeded(startdatePayment, enddatePayment, cureentPaymentDate, childPaymentSum, parseInt(child.sum));
 
                 return childPaymentSum;
@@ -29,7 +29,7 @@ const calculateAlimonyPayments = async (children, madadIndexateInterval, startPa
                      (child.gender === "female" && childAge<20)){
                 let childPaymentSum = parseInt(child.sum) * parseFloat(child.adultPrecent);
                 
-                childPaymentSum = await indexateMadad(monthlyPayments, childPaymentSum, madadIndexateInterval, baseindexateDate, cureentPaymentDate, index, isFirstMonthAfter18[index]);
+                childPaymentSum = await indexateMadad(monthlyPayments, childPaymentSum, madadIndexateInterval, baseindexateDate, cureentPaymentDate, index, paymentDayInMonth, isFirstMonthAfter18[index]);
                 childPaymentSum = getMonthPaymentWithFractionInNeeded(startdatePayment, enddatePayment, cureentPaymentDate, childPaymentSum, parseInt(child.sum)*parseFloat(child.adultPrecent));
 
                 isFirstMonthAfter18[index] = false;
@@ -63,9 +63,11 @@ const getAge = (birthDate, paymentDate) => {
     return age;
 }
 
-const indexateMadad = async (monthlyPayments, childPaymentSum, madadIndexateInterval, startdatePayment, cureentPaymentDate, childIndex, isFirstMonthAfter18 = false) => {
+const indexateMadad = async (monthlyPayments, childPaymentSum, madadIndexateInterval, startdatePayment, cureentPaymentDate, childIndex, paymentDayInMonth, isFirstMonthAfter18 = false) => {
     if(monthlyPayments.length > 0 && (monthlyPayments.length) % madadIndexateInterval == 0){
-        childPaymentSum = ((await getIndexate(childPaymentSum, startdatePayment, cureentPaymentDate))+ childPaymentSum);
+        const indexateCalcEndDate = new Date(cureentPaymentDate);
+        indexateCalcEndDate.setMonth(paymentDayInMonth >= 15 ? indexateCalcEndDate.getMonth()-1 : indexateCalcEndDate.getMonth()-2)
+        childPaymentSum = ((await getIndexate(childPaymentSum, startdatePayment, indexateCalcEndDate))+ childPaymentSum);
     }else if(monthlyPayments.length > 0 && !isFirstMonthAfter18){
         childPaymentSum = monthlyPayments[monthlyPayments.length - 1].payments[childIndex];
     }
