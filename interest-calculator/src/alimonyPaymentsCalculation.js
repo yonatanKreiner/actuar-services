@@ -48,7 +48,7 @@ const calculateAlimonyPayments = async (children, madadIndexateInterval, startPa
     }
 
     const totalMonthlyPayments = monthlyPayments.map(({date, payments}) => 
-                                        ({date, childrenPayments: payments, totalPayment: payments.reduce((total,payment) => parseInt(total + payment), 0)}));
+                                        ({date, childrenPayments: payments, totalPayment: payments.reduce((total,payment) => parseFloat(total + payment), 0)}));
 
     return totalMonthlyPayments;
 }
@@ -65,10 +65,11 @@ const getAge = (birthDate, paymentDate) => {
 
 const indexateMadad = async (monthlyPayments, childPaymentSum, madadIndexateInterval, startdatePayment, cureentPaymentDate, childIndex, paymentDayInMonth, isFirstMonthAfter18 = false) => {
     if(monthlyPayments.length > 0 && (monthlyPayments.length) % madadIndexateInterval == 0){
-        let indexateCalcEndDate = new Date(cureentPaymentDate);
-        indexateCalcEndDate.setMonth(paymentDayInMonth >= 15 ? indexateCalcEndDate.getMonth()-1 : indexateCalcEndDate.getMonth()-2)
-        indexateCalcEndDate = new Date(indexateCalcEndDate.getFullYear(),indexateCalcEndDate.getMonth()+1,0); // set to last day of month
-        childPaymentSum = ((await getIndexate(childPaymentSum, startdatePayment, indexateCalcEndDate))+ childPaymentSum);
+        const indexateCalcEndDate = new Date(cureentPaymentDate);
+        indexateCalcEndDate.setDate(paymentDayInMonth);
+        const indexateCalcStartDate = new Date(startdatePayment);
+        indexateCalcStartDate.setMonth(indexateCalcStartDate.getDate() >= 15 ? indexateCalcStartDate.getMonth()+1 : indexateCalcStartDate.getMonth()+2)
+        childPaymentSum = ((await getIndexate(childPaymentSum, indexateCalcStartDate, indexateCalcEndDate))+ childPaymentSum);
     }else if(monthlyPayments.length > 0 && !isFirstMonthAfter18){
         childPaymentSum = monthlyPayments[monthlyPayments.length - 1].payments[childIndex];
     }
