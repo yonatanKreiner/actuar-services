@@ -29,7 +29,11 @@ const calculateAlimonyPayments = async (children, madadIndexateInterval, startPa
                      (child.gender === "female" && childAge<20)){
                 let childPaymentSum = parseInt(child.sum) * parseFloat(child.adultPrecent);
                 
-                childPaymentSum = await indexateMadad(monthlyPayments, childPaymentSum, madadIndexateInterval, baseindexateDate, cureentPaymentDate, index, paymentDayInMonth, isFirstMonthAfter18[index]);
+                childPaymentSum = await indexateMadad(monthlyPayments, childPaymentSum, madadIndexateInterval, baseindexateDate, cureentPaymentDate, index, paymentDayInMonth);
+                if(isFirstMonthAfter18[index] && (monthlyPayments.length) % madadIndexateInterval != 0){
+                    childPaymentSum =  childPaymentSum * parseFloat(child.adultPrecent);
+                }
+
                 childPaymentSum = getMonthPaymentWithFractionInNeeded(startdatePayment, enddatePayment, cureentPaymentDate, childPaymentSum, parseInt(child.sum)*parseFloat(child.adultPrecent));
 
                 isFirstMonthAfter18[index] = false;
@@ -63,14 +67,14 @@ const getAge = (birthDate, paymentDate) => {
     return age;
 }
 
-const indexateMadad = async (monthlyPayments, childPaymentSum, madadIndexateInterval, startdatePayment, cureentPaymentDate, childIndex, paymentDayInMonth, isFirstMonthAfter18 = false) => {
+const indexateMadad = async (monthlyPayments, childPaymentSum, madadIndexateInterval, startdatePayment, cureentPaymentDate, childIndex, paymentDayInMonth) => {
     if(monthlyPayments.length > 0 && (monthlyPayments.length) % madadIndexateInterval == 0){
         const indexateCalcEndDate = new Date(cureentPaymentDate);
         indexateCalcEndDate.setDate(paymentDayInMonth);
         const indexateCalcStartDate = new Date(startdatePayment);
         indexateCalcStartDate.setMonth(indexateCalcStartDate.getDate() >= 15 ? indexateCalcStartDate.getMonth()+1 : indexateCalcStartDate.getMonth()+2)
         childPaymentSum = ((await getIndexate(childPaymentSum, indexateCalcStartDate, indexateCalcEndDate))+ childPaymentSum);
-    }else if(monthlyPayments.length > 0 && !isFirstMonthAfter18){
+    }else if(monthlyPayments.length > 0){
         childPaymentSum = monthlyPayments[monthlyPayments.length - 1].payments[childIndex];
     }
 
