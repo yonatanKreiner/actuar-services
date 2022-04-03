@@ -4,6 +4,7 @@ const basicAuth = require('express-basic-auth')
 
 const interestCalculate = require('./src/interestCalculation');
 const calculateAlimonyPayments = require('./src/alimonyPaymentsCalculation');
+const calcInsuranceYield = require('./src/insuranceYieldCalculation');
 
 const app = express();
 
@@ -26,7 +27,7 @@ app.use(basicAuth({
 }));
 
 app.post('/', async (req, res) => {
-const debts = req.body.debts;
+  const debts = req.body.debts;
 
   const finalDebt = await interestCalculate(debts);
 
@@ -44,6 +45,16 @@ app.post('/alimonyPayment', async (req, res) => {
   const payments = await calculateAlimonyPayments(children, madadIndexateInterval, startPaymentDate, endPaymentDate, baseIndexateDate, paymentDayInMonth);
 
   res.send({payments});
+});
+
+app.post('/insuranceYield', async (req, res) => {
+  const fundId = req.body.fundId;
+  const startDate = new Date(req.body.startDate);
+  const endDate = new Date(req.body.startDate);
+  const sum = req.body.sum;
+
+  const result = await calcInsuranceYield(fundId, startDate, endDate);
+  res.send({result});
 });
 
 app.listen(app.get('port'), () => {

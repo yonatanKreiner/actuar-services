@@ -1,5 +1,3 @@
-const moment = require('moment');
-
 const {getIndexate} = require('./madad');
 const getInterestDifferences = require('./interest');
 
