@@ -6,7 +6,8 @@ const YearToInsuranceNetApiURL = {
     2022: "https://data.gov.il/api/3/action/datastore_search?resource_id=c6c62cc7-fe02-4b18-8f3e-813abfbb4647&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
     2021: "https://data.gov.il/api/3/action/datastore_search?resource_id=d706cbbb-b1d6-4e6b-9a7e-599a78616a5f&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
     2020: "https://data.gov.il/api/3/action/datastore_search?resource_id=8bd9b499-0985-4231-b4c2-9a0bb67a6e0c&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-}
+    2019: "https://data.gov.il/api/3/action/datastore_search?resource_id=8cba3c0c-100d-4865-bc26-55651a9d054e&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
+ }
 
 const calcInsuranceYield = async (fundId, startDate, endDate, sum) => {
    const records = await getSpecificRecords(startDate, endDate, fundId);
