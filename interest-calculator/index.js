@@ -50,7 +50,7 @@ app.post('/alimonyPayment', async (req, res) => {
 app.post('/insuranceYield', async (req, res) => {
   const fundId = req.body.fundId;
   const startDate = new Date(req.body.startDate);
-  const endDate = new Date(req.body.startDate);
+  const endDate = new Date(req.body.endDate);
   const sum = req.body.sum;
 
   const result = await calcInsuranceYield(fundId, startDate, endDate);

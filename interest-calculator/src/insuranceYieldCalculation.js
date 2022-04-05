@@ -12,7 +12,7 @@ const calcInsuranceYield = async (fundId, startDate, endDate, sum) => {
    const records = await getSpecificRecords(startDate, endDate, fundId);
    console.log(records)
 
-   const totalYield = records.reduce((record, total) => ((record.MONTHLY_YIELD/100/12)+1) * total);
+   const totalYield = records.reduce((total,record) => ((parseFloat(record.MONTHLY_YIELD)/100)+1) * total, 1);
    console.log(totalYield);
 
    return {records, totalYield}; 
