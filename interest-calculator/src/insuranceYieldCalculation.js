@@ -1,6 +1,5 @@
 const axios = require('axios');
 const moment = require('moment');
-const puppeteer = require('puppeteer');
 
 const YearToInsuranceNetApiURL = {
     2022: "https://data.gov.il/api/3/action/datastore_search?resource_id=c6c62cc7-fe02-4b18-8f3e-813abfbb4647&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
@@ -49,26 +48,5 @@ const getRecordsFromAPI = async (reqURL) => {
     const result = await axios.get(reqURL);
     return result.data.result.records;
 }
-
-const insuranceDataCatalogURL = 'https://data.gov.il/dataset/insurance'; 
-const findGovAPIUrlsByYear = async (yearForCalc) => {
-    const results = await scrape(); 
-    console.log(results);
-}
-
-const scrape = async () => { 
-    const browser = await puppeteer.launch({headless: false, args: ["--no-sandbox"]});
-    const page = await browser.newPage();
-    await page.setUserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36");
-    await page.goto(insuranceDataCatalogURL);
-    await page.waitForXPath('//*[@id="dataset-resources"]/ul');
-    
-    const res = await page.$("#dataset-resources > ul")
-
-    browser.close();
-
-    return result;
-}; 
-
 
 module.exports = calcInsuranceYield;

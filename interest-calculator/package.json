@@ -20,8 +20,7 @@
     "express-basic-auth": "^1.2.0",
     "fs": "0.0.1-security",
     "moment": "^2.24.0",
-    "node-xlsx": "^0.15.0",
-    "puppeteer": "^13.5.2"
+    "node-xlsx": "^0.15.0"
   },
   "devDependencies": {
     "morgan": "^1.9.1"
