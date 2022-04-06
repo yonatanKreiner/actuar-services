@@ -29,6 +29,7 @@ const getSpecificRecords = async (startDate, endDate, fundId) => {
 
     const startDateTMP = new Date(startDate)
     startDateTMP.setDate(1);
+    startDateTMP.setHours(0,0,0,0);
     const filteredRecords = records.filter(record => 
         moment(record.REPORT_PERIOD, 'YYYYMM').toDate() >= startDateTMP &&
         moment(record.REPORT_PERIOD, 'YYYYMM').toDate() <= endDate)
