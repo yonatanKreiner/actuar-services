@@ -27,8 +27,10 @@ const getSpecificRecords = async (startDate, endDate, fundId) => {
         calcDate.setFullYear(calcDate.getFullYear() + 1);
     }
 
+    const startDateTMP = new Date(startDate)
+    startDateTMP.setDate(1);
     const filteredRecords = records.filter(record => 
-        moment(record.REPORT_PERIOD, 'YYYYMM').toDate() >= startDate &&
+        moment(record.REPORT_PERIOD, 'YYYYMM').toDate() >= startDateTMP &&
         moment(record.REPORT_PERIOD, 'YYYYMM').toDate() <= endDate)
 
     console.log(filteredRecords);
