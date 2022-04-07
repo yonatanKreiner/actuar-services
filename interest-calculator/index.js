@@ -5,6 +5,8 @@ const basicAuth = require('express-basic-auth')
 const interestCalculate = require('./src/interestCalculation');
 const calculateAlimonyPayments = require('./src/alimonyPaymentsCalculation');
 const calcInsuranceYield = require('./src/insuranceYieldCalculation');
+const calcProvidentFundYield = require('./src/providentFundYieldCalculation');
+const calcPensionYield = require('./src/pensionYieldCalculation');
 
 const app = express();
 
@@ -54,6 +56,26 @@ app.post('/insuranceYield', async (req, res) => {
   const sum = req.body.sum;
 
   const result = await calcInsuranceYield(fundId, startDate, endDate);
+  res.send({result});
+});
+
+app.post('/providentFundYield', async (req, res) => {
+  const fundId = req.body.fundId;
+  const startDate = new Date(req.body.startDate);
+  const endDate = new Date(req.body.endDate);
+  const sum = req.body.sum;
+
+  const result = await calcProvidentFundYield(fundId, startDate, endDate);
+  res.send({result});
+});
+
+app.post('/pensionYield', async (req, res) => {
+  const fundId = req.body.fundId;
+  const startDate = new Date(req.body.startDate);
+  const endDate = new Date(req.body.endDate);
+  const sum = req.body.sum;
+
+  const result = await calcPensionYield(fundId, startDate, endDate);
   res.send({result});
 });
 
