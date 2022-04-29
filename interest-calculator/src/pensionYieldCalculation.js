@@ -1,4 +1,5 @@
 const axios = require('axios');
+const https = require('https');
 const moment = require('moment');
 
 const YearToPensionNetApiURL = {
@@ -55,9 +56,18 @@ const getFundDataForMonth = async (fundId, year, ...periodDates) => {
     return result.filter(record => record.FUND_ID == fundId);
 }
 
+const agent = new https.Agent({  
+    rejectUnauthorized: false
+});
+
 const getRecordsFromAPI = async (reqURL) => {
-    const result = await axios.get(reqURL);
-    return result.data.result.records;
+    try{
+        const result = await axios.get(reqURL, {httpsAgent: agent});
+        return result.data.result.records;
+    }catch(err){
+        console.error(`error on fetch from govapi:${err}`)
+        return [];
+    }
 }
 
 module.exports = calcPensionYield;
