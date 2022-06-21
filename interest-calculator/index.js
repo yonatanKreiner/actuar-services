@@ -2,11 +2,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const basicAuth = require('express-basic-auth')
 
-const interestCalculate = require('./src/interestCalculation');
-const calculateAlimonyPayments = require('./src/alimonyPaymentsCalculation');
-const calcInsuranceYield = require('./src/insuranceYieldCalculation');
-const calcProvidentFundYield = require('./src/providentFundYieldCalculation');
-const calcPensionYield = require('./src/pensionYieldCalculation');
+const interestCalculate = require('./src/calculators/interestCalculation');
+const calculateAlimonyPayments = require('./src/calculators/alimonyPaymentsCalculation');
+const calcInsuranceYield = require('./src/calculators/insuranceYieldCalculation');
+const calcProvidentFundYield = require('./src/calculators/providentFundYieldCalculation');
+const calcPensionYield = require('./src/calculators/pensionYieldCalculation');
+const { calculatorUsesContactEmail } = require('./src/tools/emailMgr');
+
 
 const app = express();
 
@@ -77,6 +79,14 @@ app.post('/pensionYield', async (req, res) => {
 
   const result = await calcPensionYield(fundId, startDate, endDate);
   res.send({result});
+});
+
+app.post('/calcUseRegestration', async (req, res) => {
+  const email = req.body.email;
+  const calcType = req.body.calcType;
+
+  calculatorUsesContactEmail(email, calcType);
+  res.sendStatus(200);
 });
 
 app.listen(app.get('port'), () => {

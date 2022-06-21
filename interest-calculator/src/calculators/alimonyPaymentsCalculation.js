@@ -1,5 +1,5 @@
 const moment = require('moment');
-const {getIndexate} = require('./madad');
+const {getIndexate} = require('../tools/madad');
 
 
 const calculateAlimonyPayments = async (children, madadIndexateInterval, startPaymentDate, endPaymentDate, baseIndexateDate, paymentDayInMonth) => {
