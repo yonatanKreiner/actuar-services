@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const basicAuth = require('express-basic-auth')
 
 const interestCalculate = require('./src/calculators/interestCalculation');
+const madadCalculate = require('./src/calculators/madadIndexateCalculator');
 const calculateAlimonyPayments = require('./src/calculators/alimonyPaymentsCalculation');
 const calcInsuranceYield = require('./src/calculators/insuranceYieldCalculation');
 const calcProvidentFundYield = require('./src/calculators/providentFundYieldCalculation');
@@ -78,6 +79,12 @@ app.post('/pensionYield', async (req, res) => {
   const sum = req.body.sum;
 
   const result = await calcPensionYield(fundId, startDate, endDate);
+  res.send({result});
+});
+
+app.post('/madadIndexate', async (req,res) => {
+  const rowsPayload = req.body.indexatePayload;
+  const result = await madadCalculate(rowsPayload);
   res.send({result});
 });
 
