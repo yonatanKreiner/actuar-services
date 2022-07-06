@@ -13,15 +13,19 @@ const addExtra = async (debt) => {
     const paymentDate = new Date(debt.endDate);
     const debtSum = parseFloat(debt.sum);
     
-    const interestDifference = getInterestDifferences(paymentDate, debtDate, debtSum, debt.isLegalInterest);
+    const interestDifference = getInterestDifferences(paymentDate, debtDate, debtSum, debt.interestType);
 
-    const hazmadaMadad = await getIndexate(debtSum, debtDate, paymentDate);
+    let hazmadaMadad = 0;
+    if(debt.interestType !== 'shekel-interest'){
+        hazmadaMadad = await getIndexate(debtSum, debtDate, paymentDate);
+    }
+    
     const hazmadaRibit = await getIndexate(interestDifference, debtDate, paymentDate);
 
     return {
         totalDebt: ((debtSum + hazmadaMadad + interestDifference + hazmadaRibit).toLocaleString(undefined,{ minimumFractionDigits: 2 })),
         startDate: debt.startDate,
-        isLegalInterest: debt.isLegalInterest,
+        interestType: debt.interestType,
         endDate: debt.endDate,
         sum: debt.sum,
         indexateSum: hazmadaMadad.toLocaleString(undefined,{ minimumFractionDigits: 2 }),

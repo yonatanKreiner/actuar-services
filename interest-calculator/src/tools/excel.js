@@ -30,9 +30,16 @@ const convertToDailyInterest = (value, amountOfDaysBetweenCalcs) => {
     return dailyInterest;
 }
 
-const getInterestByDate = (date, amountOfDaysBetweenCalcs, isLegalInterest = true) => {
-    const worksheet =isLegalInterest ? interestsExcel[sheets.interests] : illeagalInterestsExcel[sheets.interests];
-
+const getInterestByDate = (date, amountOfDaysBetweenCalcs, interestType) => {
+    let worksheet = interestsExcel[sheets.interests];
+    if(interestType ===  'legal-interest'){
+        worksheet = interestsExcel[sheets.interests];
+    } else if(interestType ===  'illegal-interest'){
+        worksheet = illeagalInterestsExcel[sheets.interests];
+    }else if(interestType === 'shekel-interest'){
+        worksheet = shekelInterestsExcel[sheets.interests];
+    }
+    
     let i = 2;
     while(i <= worksheet.data.length && i+1 < worksheet.data.length){
         const rowDate = moment(worksheet.data[i][columns.date], 'DD/MM/YYYY').toDate();
@@ -59,7 +66,7 @@ const getInterestByDate = (date, amountOfDaysBetweenCalcs, isLegalInterest = tru
     return dailyInterest;
 }
 
-const recursiveDailyInterestFromDate = (endDate, date, isLegalInteres) => {
+const recursiveDailyInterestFromDate = (endDate, date, interestType) => {
     const DAY_IN_MILISECONDS = 24 * 60 * 60 * 1000;
     const today = new Date(date);
     let totalRecursiveInterest = 1;
@@ -71,7 +78,7 @@ const recursiveDailyInterestFromDate = (endDate, date, isLegalInteres) => {
     let amountOfDaysBetweenCalcs = Math.round(Math.abs((nextYear - today) / (DAY_IN_MILISECONDS)));
 
     while(today < endDate){
-        const daylyInterest = getInterestByDate(today, amountOfDaysBetweenCalcs, isLegalInteres);
+        const daylyInterest = getInterestByDate(today, amountOfDaysBetweenCalcs, interestType);
         const tommorow = new Date(today);
         tommorow.setDate(tommorow.getDate() + 1);
         // totalRecursiveInterest = daylyInterest * totalRecursiveInterest ;
@@ -99,11 +106,12 @@ const recursiveDailyInterestFromDate = (endDate, date, isLegalInteres) => {
     return totalRecursiveInterest;
 }
 
-// const excel = getExcel("C:/Users/Ofir Elarat/Documents/Actuar/actuar-services/interest-calculator/assets/actuar-legal-interest.xlsx"); // getExcel(`./assets/actuar-legal-interest.xlsx`); 
-// const excelIlegaInterest = getExcel("C:/Users/Ofir Elarat/Documents/Actuar/actuar-services/interest-calculator/assets/actuar-illegal-interest.xlsx"); //getExcel('./assets/actuar-illegal-interest.xlsx');
-const interestsExcel = getExcel("./assets/interest.xlsx"); 
-// const interestsExcel = getExcel("C://Users//ofire//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//interest.xlsx");
-const illeagalInterestsExcel = getExcel("./assets/illegal-interest.xlsx");
-// const illeagalInterestsExcel = getExcel("C://Users//ofire//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//illegal-interest.xlsx");
+// const interestsExcel = getExcel("./assets/interest.xlsx"); 
+const interestsExcel = getExcel("C://Users//ofire//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//interest.xlsx");
+// const illeagalInterestsExcel = getExcel("./assets/illegal-interest.xlsx");
+const illeagalInterestsExcel = getExcel("C://Users//ofire//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//illegal-interest.xlsx");
+// const shekelInterestsExcel = getExcel("./assets/shekel-interest.xlsx");
+const shekelInterestsExcel = getExcel("C://Users//ofire//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//shekel-interest.xlsx");
+
 
 module.exports = { getInterestByDate, recursiveDailyInterestFromDate }
