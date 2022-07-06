@@ -106,12 +106,12 @@ const recursiveDailyInterestFromDate = (endDate, date, interestType) => {
     return totalRecursiveInterest;
 }
 
-// const interestsExcel = getExcel("./assets/interest.xlsx"); 
-const interestsExcel = getExcel("C://Users//ofire//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//interest.xlsx");
-// const illeagalInterestsExcel = getExcel("./assets/illegal-interest.xlsx");
-const illeagalInterestsExcel = getExcel("C://Users//ofire//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//illegal-interest.xlsx");
-// const shekelInterestsExcel = getExcel("./assets/shekel-interest.xlsx");
-const shekelInterestsExcel = getExcel("C://Users//ofire//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//shekel-interest.xlsx");
+const interestsExcel = getExcel("./assets/interest.xlsx"); 
+// const interestsExcel = getExcel("C://Users//ofire//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//interest.xlsx");
+const illeagalInterestsExcel = getExcel("./assets/illegal-interest.xlsx");
+// const illeagalInterestsExcel = getExcel("C://Users//ofire//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//illegal-interest.xlsx");
+const shekelInterestsExcel = getExcel("./assets/shekel-interest.xlsx");
+// const shekelInterestsExcel = getExcel("C://Users//ofire//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//shekel-interest.xlsx");
 
 
 module.exports = { getInterestByDate, recursiveDailyInterestFromDate }
