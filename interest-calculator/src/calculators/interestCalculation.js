@@ -16,11 +16,11 @@ const addExtra = async (debt) => {
     const interestDifference = getInterestDifferences(paymentDate, debtDate, debtSum, debt.interestType);
 
     let hazmadaMadad = 0;
+    let hazmadaRibit = 0; 
     if(debt.interestType !== 'shekel-interest'){
         hazmadaMadad = await getIndexate(debtSum, debtDate, paymentDate);
+        hazmadaRibit = await getIndexate(interestDifference, debtDate, paymentDate);
     }
-    
-    const hazmadaRibit = await getIndexate(interestDifference, debtDate, paymentDate);
 
     return {
         totalDebt: ((debtSum + hazmadaMadad + interestDifference + hazmadaRibit).toLocaleString(undefined,{ minimumFractionDigits: 2 })),
