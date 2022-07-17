@@ -25,11 +25,11 @@ app.set('name', 'interest calculator')
 
 const authPass = process.env.BASIC_AUTH_PASS || "admin";
 console.log("the authpass is " + authPass);
-// app.use(basicAuth({
-//   users: {  "actuar": authPass },
-//   challenge: true,
-//   realm: 'prod-actuar',
-// }));
+app.use(basicAuth({
+  users: {  "actuar": authPass },
+  challenge: true,
+  realm: 'prod-actuar',
+}));
 
 app.post('/', async (req, res) => {
   const debts = req.body.debts;
