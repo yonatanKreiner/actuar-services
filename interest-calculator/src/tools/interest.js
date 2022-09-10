@@ -15,4 +15,14 @@ const getInterestDifferences = (endDate, debtDate, debt, interestType) => {
     return (accumulativeInterest * debt - debt);
 }
 
-module.exports = getInterestDifferences;
+const getInterestsTable = () => {
+    const interests = {
+        legalInterest: excel.getInterestsTable('legal-interest').data.slice(2),
+        illegalInterest: excel.getInterestsTable('illegal-interest').data.slice(2),
+        shekelInterest: excel.getInterestsTable('shekel-interest').data.slice(2)
+    }
+
+    return interests;
+}
+
+module.exports = {getInterestDifferences , getInterestsTable};

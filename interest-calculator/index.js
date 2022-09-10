@@ -9,7 +9,7 @@ const calcInsuranceYield = require('./src/calculators/insuranceYieldCalculation'
 const calcProvidentFundYield = require('./src/calculators/providentFundYieldCalculation');
 const calcPensionYield = require('./src/calculators/pensionYieldCalculation');
 const { calculatorUsesContactEmail } = require('./src/tools/emailMgr');
-
+const {getInterestsTable} = require('./src/tools/interest');
 
 const app = express();
 
@@ -95,6 +95,11 @@ app.post('/calcUseRegestration', async (req, res) => {
 
   calculatorUsesContactEmail(email, calcType);
   res.sendStatus(200);
+});
+
+app.get('/interestsTable', async (req, res) => {
+  const result = getInterestsTable();
+  res.send({result});
 });
 
 app.listen(app.get('port'), () => {

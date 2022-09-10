@@ -1,5 +1,5 @@
 const {getIndexate} = require('../tools/madad');
-const getInterestDifferences = require('../tools/interest');
+const {getInterestDifferences} = require('../tools/interest');
 
 const interestCalculate = async (debts) => {
     const allDepts = Promise.all(debts.map(async (debt) => await addExtra(debt)));
