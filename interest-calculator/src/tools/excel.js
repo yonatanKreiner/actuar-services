@@ -106,6 +106,18 @@ const recursiveDailyInterestFromDate = (endDate, date, interestType) => {
     return totalRecursiveInterest;
 }
 
+const getInterestsTable = (interestType) => {
+    if(interestType ===  'legal-interest'){
+        worksheet = interestsExcel[sheets.interests];
+    } else if(interestType ===  'illegal-interest'){
+        worksheet = illeagalInterestsExcel[sheets.interests];
+    }else if(interestType === 'shekel-interest'){
+        worksheet = shekelInterestsExcel[sheets.interests];
+    }
+    
+    return worksheet;
+}
+
 const interestsExcel = getExcel("./assets/interest.xlsx"); 
 // const interestsExcel = getExcel("C://Users//ofire//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//interest.xlsx");
 const illeagalInterestsExcel = getExcel("./assets/illegal-interest.xlsx");
@@ -114,4 +126,4 @@ const shekelInterestsExcel = getExcel("./assets/shekel-interest.xlsx");
 // const shekelInterestsExcel = getExcel("C://Users//ofire//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//shekel-interest.xlsx");
 
 
-module.exports = { getInterestByDate, recursiveDailyInterestFromDate }
+module.exports = { getInterestByDate, recursiveDailyInterestFromDate, getInterestsTable }
