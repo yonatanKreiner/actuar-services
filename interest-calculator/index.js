@@ -10,6 +10,7 @@ const calcProvidentFundYield = require('./src/calculators/providentFundYieldCalc
 const calcPensionYield = require('./src/calculators/pensionYieldCalculation');
 const { calculatorUsesContactEmail } = require('./src/tools/emailMgr');
 const {getInterestsTable} = require('./src/tools/interest');
+const CalculateSalaryDetermine = require('./src/calculators/salaryDetermineCalculator');
 
 const app = express();
 
@@ -100,6 +101,15 @@ app.post('/calcUseRegestration', async (req, res) => {
 app.get('/interestsTable', async (req, res) => {
   const result = getInterestsTable();
   res.send({result});
+});
+
+app.post('/salaryDetermine', async (req, res) => {
+  const generalPayload = req.body.generalPayload;
+  const salaries = req.body.salaries;
+
+  const determineSalary = await CalculateSalaryDetermine(salaries, generalPayload.calculationDate);
+
+  res.send({determineSalary});
 });
 
 app.listen(app.get('port'), () => {
