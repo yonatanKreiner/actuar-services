@@ -1,7 +1,7 @@
 const {getIndexate} = require('../tools/madad'); 
 
-const independentWorkerSalaryPrec = 16;
-const workerSalaryPrec = 12.5;
+const independentWorkerSalaryPrec = 0.16;
+const workerSalaryPrec = 0.125;
 
 const CalculateSalaryDetermine = async (salaries, calculationDate, isIndependendWorker) => {
     const salariesSumsPromise = salaries.map(async salary => {
