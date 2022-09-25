@@ -107,9 +107,9 @@ app.post('/salaryDetermine', async (req, res) => {
   const generalPayload = req.body.generalPayload;
   const salaries = req.body.salaries;
 
-  const determineSalary = await CalculateSalaryDetermine(salaries, generalPayload.calculationDate);
+  const result = await CalculateSalaryDetermine(salaries, generalPayload.calculationDate);
 
-  res.send({determineSalary});
+  res.send(result);
 });
 
 app.listen(app.get('port'), () => {

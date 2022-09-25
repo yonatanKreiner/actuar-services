@@ -20,6 +20,10 @@ const CalculateSalaryDetermine = async (salaries, calculationDate, isIndependend
         const monthlyDetermineSalaryIndexate = await getIndexate(monthlyDetermineSalary, indexateStartDate, new Date(calculationDate));
      
         return ({
+            date: salary.date,
+            sum: salary.sum,
+            sumEmployee: salary.sumEmployee,
+            sumCompany: salary.sumCompany,
             totalReturn: totalReturn,
             returnPrecOfSalary: returnPrecOfSalary,
             monthlyDetermineSalary: monthlyDetermineSalary,
@@ -50,7 +54,8 @@ const CalculateSalaryDetermine = async (salaries, calculationDate, isIndependend
     }
     const lastFormerTwelthAvg = lastFormerTwelthSum / 12;
 
-    return Math.max(lastThreeAvg, lastTwelthAvg, lastFormerTwelthAvg).toLocaleString(undefined,{ minimumFractionDigits: 2 });
+    const determineSalary = Math.max(lastThreeAvg, lastTwelthAvg, lastFormerTwelthAvg).toLocaleString(undefined,{ minimumFractionDigits: 2 });
+    return {determineSalary, salariesSums};
 }
 
 module.exports = CalculateSalaryDetermine;
