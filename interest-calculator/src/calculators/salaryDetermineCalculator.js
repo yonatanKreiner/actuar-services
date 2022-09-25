@@ -7,9 +7,9 @@ const CalculateSalaryDetermine = async (salaries, calculationDate, isIndependend
     const salariesSumsPromise = salaries.map(async salary => {
         const totalReturn = parseFloat(salary.sumEmployee) + parseFloat(salary.sumCompany);
         let returnPrecOfSalary = totalReturn / parseFloat(salary.sum); 
-        if(!isIndependendWorker && returnPrecOfSalary < workerSalaryPrec){
+        if(!salary.isIndependendWorker && returnPrecOfSalary < workerSalaryPrec){
             returnPrecOfSalary = workerSalaryPrec;
-        }else if(isIndependendWorker && returnPrecOfSalary < independentWorkerSalaryPrec){
+        }else if(salary.isIndependendWorker && returnPrecOfSalary < independentWorkerSalaryPrec){
             returnPrecOfSalary = independentWorkerSalaryPrec;
         }
 
@@ -22,6 +22,7 @@ const CalculateSalaryDetermine = async (salaries, calculationDate, isIndependend
         return ({
             date: salary.date,
             sum: salary.sum,
+            isIndependendWorker: salary.isIndependendWorker,
             sumEmployee: salary.sumEmployee,
             sumCompany: salary.sumCompany,
             totalReturn: totalReturn,
