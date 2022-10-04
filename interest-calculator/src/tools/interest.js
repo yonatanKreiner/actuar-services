@@ -17,9 +17,9 @@ const getInterestDifferences = (endDate, debtDate, debt, interestType) => {
 
 const getInterestsTable = () => {
     const interests = {
-        legalInterest: excel.getInterestsTable('legal-interest').data.slice(2),
-        illegalInterest: excel.getInterestsTable('illegal-interest').data.slice(2),
-        shekelInterest: excel.getInterestsTable('shekel-interest').data.slice(2)
+        legalInterest: excel.getInterestsTable('legal-interest').data.slice(2).reverse(),
+        illegalInterest: excel.getInterestsTable('illegal-interest').data.slice(2).reverse(),
+        shekelInterest: excel.getInterestsTable('shekel-interest').data.slice(2).reverse()
     }
 
     return interests;
