@@ -76,7 +76,7 @@ const CalculateSalaryDetermine = async (salaries, calculationDate) => {
     const lastFormerTwelthAvg = lastFormerTwelthSum / 12;
 
     const determineSalary = Math.max(lastThreeAvg, lastTwelthAvg, lastFormerTwelthAvg).toLocaleString(undefined,{ minimumFractionDigits: 2 });
-    return {determineSalary, salariesSums};
+    return {determineSalary, salariesSums, calcResults: {lastThreeAvg, lastTwelthAvg, lastFormerTwelthAvg}};
 }
 
 module.exports = CalculateSalaryDetermine;
