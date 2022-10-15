@@ -59,21 +59,23 @@ const CalculateSalaryDetermine = async (salaries, calculationDate) => {
 
     
     let lastTwelthSum = 0;
-    if(noDupSalariesCalc.length >= 12){
-        for(let i=1; i<=12; i++){
-            lastTwelthSum += noDupSalariesCalc[noDupSalariesCalc.length - i].monthlyDetermineSalaryIndexate
+    let i = 0;
+    if(noDupSalariesCalc.length >= 4){
+        for(i=0; i < noDupSalariesCalc.length && i < 12; i++){
+            lastTwelthSum += noDupSalariesCalc[i].monthlyDetermineSalaryIndexate
         }
     }
-    const lastTwelthAvg = lastTwelthSum / 12;
+    const lastTwelthAvg = lastTwelthSum / (i);
 
 
     let lastFormerTwelthSum = 0;
-    if(noDupSalariesCalc.length >= 24){
-        for(let i=13; i<=24; i++){
-            lastFormerTwelthSum += noDupSalariesCalc[noDupSalariesCalc.length - i].monthlyDetermineSalaryIndexate
+    i = 13;
+    if(noDupSalariesCalc.length >= 13){
+        for(i=13; i < noDupSalariesCalc.length && i<24; i++){
+            lastFormerTwelthSum += noDupSalariesCalc[i].monthlyDetermineSalaryIndexate
         }
     }
-    const lastFormerTwelthAvg = lastFormerTwelthSum / 12;
+    const lastFormerTwelthAvg = lastFormerTwelthSum / (i - 12);
 
     const determineSalary = Math.max(lastThreeAvg, lastTwelthAvg, lastFormerTwelthAvg).toLocaleString(undefined,{ minimumFractionDigits: 2 });
     return {determineSalary, salariesSums, calcResults: {lastThreeAvg, lastTwelthAvg, lastFormerTwelthAvg}};
