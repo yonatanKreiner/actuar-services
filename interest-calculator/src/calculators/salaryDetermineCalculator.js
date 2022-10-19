@@ -18,7 +18,10 @@ const CalculateSalaryDetermine = async (salaries, calculationDate) => {
         const indexateStartDate = new Date(salary.date);
         indexateStartDate.setHours(0);indexateStartDate.setMinutes(0);indexateStartDate.setSeconds(0);indexateStartDate.setMilliseconds(0);
         indexateStartDate.setMonth(indexateStartDate.getMonth()-2);
-        const monthlyDetermineSalaryIndexate = await getIndexate(monthlyDetermineSalary, indexateStartDate, new Date(calculationDate));
+        const indexateEndDate = new Date(calculationDate);
+        indexateEndDate.setMonth(indexateEndDate.getMonth()-2);
+
+        const monthlyDetermineSalaryIndexate = await getIndexate(monthlyDetermineSalary, indexateStartDate, indexateEndDate);
      
         return ({
             date: salary.date,
@@ -53,10 +56,12 @@ const CalculateSalaryDetermine = async (salaries, calculationDate) => {
         }
     }
 
-    const lastThreeAvg = (noDupSalariesCalc[noDupSalariesCalc.length - 1].monthlyDetermineSalaryIndexate +
+    let lastThreeAvg = 0;
+    if(noDupSalariesCalc.length >= 3){
+        lastThreeAvg = (noDupSalariesCalc[noDupSalariesCalc.length - 1].monthlyDetermineSalaryIndexate +
                             noDupSalariesCalc[noDupSalariesCalc.length - 2].monthlyDetermineSalaryIndexate +
                             noDupSalariesCalc[noDupSalariesCalc.length - 3].monthlyDetermineSalaryIndexate) / 3;
-
+    }
     
     let lastTwelthSum = 0;
     let i = 0;
