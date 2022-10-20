@@ -18,6 +18,7 @@ const CalculateSalaryDetermine = async (salaries, calculationDate) => {
         const indexateStartDate = new Date(salary.date);
         indexateStartDate.setHours(0);indexateStartDate.setMinutes(0);indexateStartDate.setSeconds(0);indexateStartDate.setMilliseconds(0);
         const indexateEndDate = new Date(calculationDate);
+        indexateEndDate.setDate(1);
 
         const monthlyDetermineSalaryIndexate = await getIndexate(monthlyDetermineSalary, indexateStartDate, indexateEndDate);
      
