@@ -99,7 +99,7 @@ app.post('/calcUseRegestration', async (req, res) => {
 });
 
 app.get('/interestsTable', async (req, res) => {
-  const result = getInterestsTable();
+  const result = await getInterestsTable();
   res.send({result});
 });
 

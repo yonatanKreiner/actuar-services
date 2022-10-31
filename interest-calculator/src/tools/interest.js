@@ -15,7 +15,9 @@ const getInterestDifferences = (endDate, debtDate, debt, interestType) => {
     return (accumulativeInterest * debt - debt);
 }
 
-const getInterestsTable = () => {
+const getInterestsTable = async () => {
+    await excel.refreshExcelFiles();
+
     const interests = {
         legalInterest: excel.getInterestsTable('legal-interest').data.slice(2).reverse(),
         illegalInterest: excel.getInterestsTable('illegal-interest').data.slice(2).reverse(),

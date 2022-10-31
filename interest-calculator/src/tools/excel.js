@@ -1,5 +1,7 @@
 const xlsx = require('node-xlsx');
 const moment = require('moment');
+const axios = require('axios');
+const fs = require('fs');
 
 const getExcel = (xlsPath) => {
     return xlsx.parse(xlsPath);
@@ -118,12 +120,43 @@ const getInterestsTable = (interestType) => {
     return worksheet;
 }
 
-const interestsExcel = getExcel("./assets/interest.xlsx"); 
-// const interestsExcel = getExcel("C://Users//ofire//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//interest.xlsx");
-const illeagalInterestsExcel = getExcel("./assets/illegal-interest.xlsx");
-// const illeagalInterestsExcel = getExcel("C://Users//ofire//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//illegal-interest.xlsx");
-const shekelInterestsExcel = getExcel("./assets/shekel-interest.xlsx");
-// const shekelInterestsExcel = getExcel("C://Users//ofire//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//shekel-interest.xlsx");
+const refreshExcelFiles = async () => {
+    try{
+        await saveTempXLS('https://ga.mof.gov.il/api/rate/history/12');
+        interestsExcel = getExcel("./assets/interest_tmp.xls"); 
+            
+        await saveTempXLS('https://ga.mof.gov.il/api/rate/history/9')
+        illeagalInterestsExcel = getExcel("./assets/interest_tmp.xls"); 
+
+        await saveTempXLS('https://ga.mof.gov.il/api/rate/history/10')
+        shekelInterestsExcel = getExcel("./assets/interest_tmp.xls");
+    }catch(err){
+        console.log("failed to refresh rates")
+    }    
+}
+
+const saveTempXLS = (url) => {
+    return axios.request({
+    responseType: 'arraybuffer',
+    url: url,
+    method: 'get',
+    headers: {
+    'Content-Type': 'blob',
+    },
+  }).then((result) => {
+      const outputFilename = './assets/interest_tmp.xls';
+      fs.writeFileSync(outputFilename, result.data);
+      return outputFilename;
+    });
+  }
 
 
-module.exports = { getInterestByDate, recursiveDailyInterestFromDate, getInterestsTable }
+let interestsExcel = getExcel("./assets/interest.xlsx"); 
+// let interestsExcel = getExcel("C://Users//ofire//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//interest.xlsx");
+let illeagalInterestsExcel = getExcel("./assets/illegal-interest.xlsx");
+// let illeagalInterestsExcel = getExcel("C://Users//ofire//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//illegal-interest.xlsx");
+let shekelInterestsExcel = getExcel("./assets/shekel-interest.xlsx");
+// let shekelInterestsExcel = getExcel("C://Users//ofire//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//shekel-interest.xlsx");
+
+
+module.exports = { getInterestByDate, recursiveDailyInterestFromDate, getInterestsTable, refreshExcelFiles }
