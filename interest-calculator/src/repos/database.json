@@ -1,0 +1,70 @@
+{
+    "annuities": [
+        {
+            "year": "2012",
+            "avgSalary":  8619,
+            "annuityFreeFromTax":  34476,
+            "maxCompensation": 0
+        },
+        {
+            "year": "2013",
+            "avgSalary": 8828,
+            "annuityFreeFromTax": 35312,
+            "maxCompensation": 0
+        },
+        {
+            "year": "2014",
+            "avgSalary": 9089,
+            "annuityFreeFromTax": 36356,
+            "maxCompensation": 0
+        },
+        {
+            "year": "2015",
+            "avgSalary": 9260,
+            "annuityFreeFromTax": 37040,
+            "maxCompensation": 0
+        },
+        {
+            "year": "2016",
+            "avgSalary": 9464,
+            "annuityFreeFromTax": 23660,
+            "maxCompensation": 0
+        },
+        {
+            "year": "2017",
+            "avgSalary": 9673,
+            "annuityFreeFromTax": 24183,
+            "maxCompensation":  32000
+        },
+        {
+            "year": "2018",
+            "avgSalary": 9906,
+            "annuityFreeFromTax": 24765,
+            "maxCompensation": 32800
+        },
+        {
+            "year": "2019",
+            "avgSalary": 10273,
+            "annuityFreeFromTax": 25683,
+            "maxCompensation": 34000
+        },
+        {
+            "year": "2020",
+            "avgSalary": 10551,
+            "annuityFreeFromTax": 26378,
+            "maxCompensation": 34900
+        },
+        {
+            "year": "2021",
+            "avgSalary": 10551,
+            "annuityFreeFromTax": 26378,
+            "maxCompensation": 34900
+        },
+        {
+            "year": "2022",
+            "avgSalary": 10551,
+            "annuityFreeFromTax": 26378,
+            "maxCompensation": 34900
+        }
+    ]
+}

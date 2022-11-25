@@ -11,6 +11,7 @@ const calcPensionYield = require('./src/calculators/pensionYieldCalculation');
 const { calculatorUsesContactEmail } = require('./src/tools/emailMgr');
 const {getInterestsTable} = require('./src/tools/interest');
 const CalculateSalaryDetermine = require('./src/calculators/salaryDetermineCalculator');
+const annuityRepo = require('./src/repos/annuity-repo');
 
 const app = express();
 
@@ -110,6 +111,11 @@ app.post('/salaryDetermine', async (req, res) => {
   const result = await CalculateSalaryDetermine(salaries, generalPayload.calculationDate);
 
   res.send(result);
+});
+
+app.get('/annuitiesTable', async (req, res) => {
+  const result = await annuityRepo.getAll();
+  res.send({result});
 });
 
 app.listen(app.get('port'), () => {
