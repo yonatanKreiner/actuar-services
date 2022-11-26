@@ -12,6 +12,7 @@ const { calculatorUsesContactEmail } = require('./src/tools/emailMgr');
 const {getInterestsTable} = require('./src/tools/interest');
 const CalculateSalaryDetermine = require('./src/calculators/salaryDetermineCalculator');
 const annuityRepo = require('./src/repos/annuity-repo');
+const {calculateAnnuities} = require('./src/calculators/annuityDepositsCalculator');
 
 const app = express();
 
@@ -115,6 +116,12 @@ app.post('/salaryDetermine', async (req, res) => {
 
 app.get('/annuitiesTable', async (req, res) => {
   const result = await annuityRepo.getAll();
+  res.send({result});
+});
+
+app.post('/annuityDepositsCalculator', async (req, res) => {
+  const deposites = req.body.deposits;
+  const result = await calculateAnnuities(deposites);
   res.send({result});
 });
 

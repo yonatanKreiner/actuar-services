@@ -3,13 +3,13 @@ const orm = require('./mock-orm');
 /**
  * Get one annuity.
  * 
- * @param date
+ * @param year
  * @returns 
  */
-async function getOne(date) {
+async function getOne(year) {
     const db = await orm.openDb();
     for (const annuity of db.annuities) {
-        if (annuity.date === date) {
+        if (annuity.year == year) {
             return annuity;
         }
     }
