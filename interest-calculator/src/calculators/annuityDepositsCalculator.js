@@ -6,6 +6,16 @@ const calculateAnnuities = async (deposits) => {
         const depositeDate = moment(deposit.paymentMonth, "YYYYMM").toDate();
         const yearlyAnnuity = await annuityRepo.getOne(depositeDate.getFullYear());
 
+        if(!yearlyAnnuity){
+            return {
+                ...deposit,
+                depositeFreeEmployee: 0,
+                depositeFreeCompany: 0,
+                depositeFreeCompensation: 0,
+                total: 0
+            }
+        }
+
         const employeeMax = yearlyAnnuity.avgSalary * 0.07;
         const companyMax = yearlyAnnuity.annuityFreeFromTax * 0.075;
         const compensationMax = yearlyAnnuity.maxCompensation * 0.0833;
