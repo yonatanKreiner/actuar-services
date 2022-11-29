@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const basicAuth = require('express-basic-auth')
+const cors = require('cors')
 
 const interestCalculate = require('./src/calculators/interestCalculation');
 const madadCalculate = require('./src/calculators/madadIndexateCalculator');
@@ -21,6 +22,10 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+app.use(cors({
+  credentials: true,
+  origin: ['https://actuar.herokuapp.com']
+}))
 app.use(bodyParser.json());
 
 app.set('port', (process.env.PORT || 7001));
