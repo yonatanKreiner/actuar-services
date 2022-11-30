@@ -8,11 +8,7 @@ const calculateAnnuities = async (deposits) => {
 
         if(!yearlyAnnuity){
             return {
-                ...deposit,
-                depositeFreeEmployee: 0,
-                depositeFreeCompany: 0,
-                depositeFreeCompensation: 0,
-                total: 0
+                ...deposit
             }
         }
 
