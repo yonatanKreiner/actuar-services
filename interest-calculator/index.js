@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(cors({
   credentials: true,
-  origin: ['https://actuar.herokuapp.com']
+  origin: ['https://actuar.herokuapp.com','https://actuarit.azurewebsites.net']
 }))
 app.use(bodyParser.json());
 
