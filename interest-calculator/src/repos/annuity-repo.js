@@ -21,4 +21,10 @@ async function getAll() {
     return db.annuities;
 }
 
-module.exports = {getOne, getAll}
+async function updateAll(newAnnuitiesTable){
+    const db = await orm.openDb();
+    db.annuities = newAnnuitiesTable;
+    await orm.saveDb(db);
+}
+
+module.exports = {getOne, getAll, updateAll}

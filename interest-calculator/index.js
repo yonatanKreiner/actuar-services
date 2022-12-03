@@ -124,6 +124,13 @@ app.get('/annuitiesTable', async (req, res) => {
   res.send({result});
 });
 
+app.post('/annuitiesTable', async (req, res) => {
+  const newAnnuities = req.body.annuities;
+  await annuityRepo.updateAll(newAnnuities);
+  res.sendStatus(200);
+});
+
+
 app.post('/annuityDepositsCalculator', async (req, res) => {
   const deposites = req.body.deposits;
   const result = await calculateAnnuities(deposites);
