@@ -9,6 +9,7 @@ const interestCalculate = async (debts) => {
 };
 
 const addExtra = async (debt) => {
+    console.log(`start calc debt: ${debt}`);
     const debtDate = new Date(debt.startDate);
     const paymentDate = new Date(debt.endDate);
     const debtSum = parseFloat(debt.sum);
@@ -21,6 +22,8 @@ const addExtra = async (debt) => {
         hazmadaMadad = await getIndexate(debtSum, debtDate, paymentDate);
         hazmadaRibit = await getIndexate(interestDifference, debtDate, paymentDate);
     }
+
+    console.log(`end calc debt: ${debt}`);
 
     return {
         totalDebt: ((debtSum + hazmadaMadad + interestDifference + hazmadaRibit).toLocaleString(undefined,{ minimumFractionDigits: 2 })),
