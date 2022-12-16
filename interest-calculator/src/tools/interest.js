@@ -1,16 +1,17 @@
 const excel = require('./excel');
+const {getAll} = require('../repos/interest-repo');
 
 // Interest gov data
 // https://ga.mof.gov.il/rate
 
-const getInterestDifferences = (endDate, debtDate, debt, interestType) => {
+const getInterestDifferences = async (endDate, debtDate, debt, interestType) => {
     // endDate.setDate(endDate.getDate() - 1);
     if(interestType === 'indexate-only'){
         return 0;
     }
 
     endDate.setHours(0,0,0);
-    const accumulativeInterest = excel.recursiveDailyInterestFromDate(endDate, debtDate, interestType);
+    const accumulativeInterest = await excel.recursiveDailyInterestFromDate(endDate, debtDate, interestType);
     
     return (accumulativeInterest * debt - debt);
 }
@@ -18,11 +19,7 @@ const getInterestDifferences = (endDate, debtDate, debt, interestType) => {
 const getInterestsTable = async () => {
     await excel.refreshExcelFiles();
 
-    const interests = {
-        legalInterest: excel.getInterestsTable('legal-interest').data.slice(2).reverse(),
-        illegalInterest: excel.getInterestsTable('illegal-interest').data.slice(2).reverse(),
-        shekelInterest: excel.getInterestsTable('shekel-interest').data.slice(2).reverse()
-    }
+    const interests = await getAll()
 
     return interests;
 }

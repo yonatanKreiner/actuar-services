@@ -2,6 +2,7 @@ const xlsx = require('node-xlsx');
 const moment = require('moment');
 const axios = require('axios');
 const fs = require('fs');
+const {getAll, updateAll} = require('../repos/interest-repo');
 
 const getExcel = (xlsPath) => {
     return xlsx.parse(xlsPath);
@@ -68,7 +69,45 @@ const getInterestByDate = (date, amountOfDaysBetweenCalcs, interestType) => {
     return dailyInterest;
 }
 
-const recursiveDailyInterestFromDate = (endDate, date, interestType) => {
+const getInterestByDateUsingRepo = async (date, amountOfDaysBetweenCalcs, interestType) => {
+    const interests = await getAll();
+    let interestsArray = interests.ligelInterests;
+    if(interestType ===  'legal-interest'){
+        interestsArray = interests.ligelInterests;
+    } else if(interestType ===  'illegal-interest'){
+        interestsArray = interests.illigelInterests;
+    }else if(interestType === 'shekel-interest'){
+        interestsArray = interests.shekelInterests;
+    }
+    
+
+    let i = 2;
+    while(i <= interestsArray.length && i+1 < interestsArray.length){
+        const rowDate = moment(interestsArray[i].date, 'DD/MM/YYYY').toDate();
+        const nextRowDate = moment(interestsArray[i+1].date, 'DD/MM/YYYY').toDate();
+        if(rowDate < date ){
+            if(i+1 < interestsArray.length && nextRowDate > date){
+                break;
+            }
+            else{
+                if(i+1 < interestsArray.length && nextRowDate <= date){
+                    i++;
+                } else{
+                    break;
+                }
+            }
+        }else{
+            // notice the date is older than the oldest in the excel
+            break;
+        }
+    }
+
+    const dailyInterest = convertToDailyInterest(interestsArray[i].interest, amountOfDaysBetweenCalcs);
+    
+    return dailyInterest;
+}
+
+const recursiveDailyInterestFromDate = async (endDate, date, interestType) => {
     const DAY_IN_MILISECONDS = 24 * 60 * 60 * 1000;
     const today = new Date(date);
     let totalRecursiveInterest = 1;
@@ -80,7 +119,7 @@ const recursiveDailyInterestFromDate = (endDate, date, interestType) => {
     let amountOfDaysBetweenCalcs = Math.round(Math.abs((nextYear - today) / (DAY_IN_MILISECONDS)));
 
     while(today < endDate){
-        const daylyInterest = getInterestByDate(today, amountOfDaysBetweenCalcs, interestType);
+        const daylyInterest = await getInterestByDateUsingRepo(today, amountOfDaysBetweenCalcs, interestType);
         const tommorow = new Date(today);
         tommorow.setDate(tommorow.getDate() + 1);
         // totalRecursiveInterest = daylyInterest * totalRecursiveInterest ;
@@ -122,14 +161,26 @@ const getInterestsTable = (interestType) => {
 
 const refreshExcelFiles = async () => {
     try{
+        const interests = {
+            ligelInterests: [],
+            illigelInterests: [],
+            shekelInterests: []
+        };
+
         await saveTempXLS('https://ga.mof.gov.il/api/rate/history/12');
-        interestsExcel = getExcel("./assets/interest_tmp.xls"); 
-            
+        interestsExcel = getExcel("./assets/interest_tmp.xls");
+
         await saveTempXLS('https://ga.mof.gov.il/api/rate/history/9')
         illeagalInterestsExcel = getExcel("./assets/interest_tmp.xls"); 
 
         await saveTempXLS('https://ga.mof.gov.il/api/rate/history/10')
         shekelInterestsExcel = getExcel("./assets/interest_tmp.xls");
+
+        interests.ligelInterests = getInterestsTable('legal-interest').data.slice(2).map(x => ({date: x[0], interest: x[1]})).reverse();
+        interests.illigelInterests = getInterestsTable('illegal-interest').data.slice(2).map(x => ({date: x[0], interest: x[1]})).reverse();
+        interests.shekelInterests = getInterestsTable('shekel-interest').data.slice(2).map(x => ({date: x[0], interest: x[1]})).reverse();
+
+        await updateAll(interests)
     }catch(err){
         console.log("failed to refresh rates")
     }    
@@ -149,7 +200,6 @@ const saveTempXLS = (url) => {
       return outputFilename;
     });
   }
-
 
 let interestsExcel = getExcel("./assets/interest.xlsx"); 
 // let interestsExcel = getExcel("C://Users//ofire//Documents//personal projects//Actuar//actuar-services//interest-calculator//assets//interest.xlsx");
