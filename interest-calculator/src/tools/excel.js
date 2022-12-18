@@ -81,17 +81,17 @@ const getInterestByDateUsingRepo = async (date, amountOfDaysBetweenCalcs, intere
     }
     
 
-    let i = 2;
-    while(i <= interestsArray.length && i+1 < interestsArray.length){
+    let i = interestsArray.length - 1;
+    while(i-1 >= 0){
         const rowDate = moment(interestsArray[i].date, 'DD/MM/YYYY').toDate();
-        const nextRowDate = moment(interestsArray[i+1].date, 'DD/MM/YYYY').toDate();
+        const nextRowDate = moment(interestsArray[i-1].date, 'DD/MM/YYYY').toDate();
         if(rowDate < date ){
-            if(i+1 < interestsArray.length && nextRowDate > date){
+            if(i-1 < interestsArray.length && nextRowDate > date){
                 break;
             }
             else{
-                if(i+1 < interestsArray.length && nextRowDate <= date){
-                    i++;
+                if(i-1 < interestsArray.length && nextRowDate <= date){
+                    i--;
                 } else{
                     break;
                 }
