@@ -4,7 +4,7 @@ const axios = require('axios');
 // https://www.cbs.gov.il/he/Pages/%D7%9E%D7%93%D7%93%D7%99-%D7%9E%D7%97%D7%99%D7%A8%D7%99%D7%9D-%D7%91%D7%90%D7%9E%D7%A6%D7%A2%D7%95%D7%AA-API.aspx
 
 const getIndexate = async (value, startDate, endDate) => {
-    axios.defaults.timeout = 5000; // how long axios should wait for a response
+    axios.defaults.timeout = 10000; // how long axios should wait for a response
 
     const startdateString =  `${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()}`
     const enddateString =  `${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}`
