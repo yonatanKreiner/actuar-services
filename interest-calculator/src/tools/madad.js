@@ -6,8 +6,8 @@ const axios = require('axios');
 const getIndexate = async (value, startDate, endDate) => {
     axios.defaults.timeout = 5000; // how long axios should wait for a response
 
-    const startdateString =  `${startDate.getMonth() + 1}-${startDate.getDate()}-${startDate.getFullYear()}`
-    const enddateString =  `${endDate.getMonth() + 1}-${endDate.getDate()}-${endDate.getFullYear()}`
+    const startdateString =  `${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()}`
+    const enddateString =  `${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}`
     
     let result;
     try {
