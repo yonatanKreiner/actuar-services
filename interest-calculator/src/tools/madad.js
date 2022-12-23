@@ -13,8 +13,8 @@ const getIndexate = async (value, startDate, endDate) => {
     try {
         const res = await axios.get(`https://api.cbs.gov.il/index/data/calculator/120010?value=${value.toFixed(2)}&date=${startdateString}&toDate=${enddateString}&format=json&download=false`)
         result = res.data.answer.to_value;
-    }catch {
-        console.log(`failed calculate indexate ${startdateString} - ${enddateString}`);
+    }catch(e) {
+        console.log(`failed calculate indexate ${startdateString} - ${enddateString}, with err: ${e}`);
         result = value;
     }
     return result - value;
