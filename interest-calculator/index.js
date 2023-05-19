@@ -31,6 +31,10 @@ app.use(bodyParser.json());
 app.set('port', (process.env.PORT || 7001));
 app.set('name', 'interest calculator')
 
+app.get('/test', (req, res) => {
+  res.send("The app is ready!");
+})
+
 const authPass = process.env.BASIC_AUTH_PASS || "admin";
 console.log("the authpass is " + authPass);
 app.use(basicAuth({
