@@ -13,7 +13,7 @@ const calculateAnnuities = async (deposits) => {
 
         const depositeFreeEmployee = deposit.depositeEmpoloyee - yearlyAnnuity.employeeMax > 0 ? deposit.depositeEmpoloyee - yearlyAnnuity.employeeMax : 0; 
         const depositeFreeCompany = deposit.depositeCompany - yearlyAnnuity.companyMax > 0 ? deposit.depositeCompany - yearlyAnnuity.companyMax : 0; 
-        const depositeFreeCompensation = deposit.year > 2017 && deposit.depositeCompensation - yearlyAnnuity.compensationMax > 0 ? deposit.depositeCompensation - yearlyAnnuity.compensationMax : 0; 
+        const depositeFreeCompensation = deposit.year >= 2017 && deposit.depositeCompensation - yearlyAnnuity.compensationMax > 0 ? deposit.depositeCompensation - yearlyAnnuity.compensationMax : 0; 
         const total = depositeFreeEmployee + depositeFreeCompany + depositeFreeCompensation;
 
         return {
