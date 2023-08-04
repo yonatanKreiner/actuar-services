@@ -24,6 +24,7 @@ const getFormFromTemplate = (data) => {
         client_name: data.client_name,
         client_id: data.client_id,
         client_age: data.client_age,
+        client_gender: data.client_gender,
         client_retirement: data.client_retirement,
         total_deposits: data.total_deposits,
         total_known_deposits: data.total_known_deposits,
