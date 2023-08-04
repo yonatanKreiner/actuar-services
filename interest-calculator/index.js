@@ -10,10 +10,11 @@ const calcInsuranceYield = require('./src/calculators/insuranceYieldCalculation'
 const calcProvidentFundYield = require('./src/calculators/providentFundYieldCalculation');
 const calcPensionYield = require('./src/calculators/pensionYieldCalculation');
 const { calculatorUsesContactEmail } = require('./src/tools/emailMgr');
-const {getInterestsTable} = require('./src/tools/interest');
+const { getInterestsTable } = require('./src/tools/interest');
 const CalculateSalaryDetermine = require('./src/calculators/salaryDetermineCalculator');
 const annuityRepo = require('./src/repos/annuity-repo');
-const {calculateAnnuities} = require('./src/calculators/annuityDepositsCalculator');
+const { calculateAnnuities } = require('./src/calculators/annuityDepositsCalculator');
+const { getFormFromTemplate } = require('./src/tools/annuityForm');
 
 const app = express();
 
@@ -24,7 +25,7 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(cors({
   credentials: true,
-  origin: ['https://actuar.herokuapp.com','https://actuarit.azurewebsites.net', "http://localhost:3000"]
+  origin: ['https://actuar.herokuapp.com', 'https://actuarit.azurewebsites.net', "http://localhost:3000"]
 }))
 app.use(bodyParser.json());
 
@@ -38,7 +39,7 @@ app.get('/test', (req, res) => {
 const authPass = process.env.BASIC_AUTH_PASS || "admin";
 console.log("the authpass is " + authPass);
 app.use(basicAuth({
-  users: {  "actuar": authPass },
+  users: { "actuar": authPass },
   challenge: true,
   realm: 'prod-actuar',
 }));
@@ -61,7 +62,7 @@ app.post('/alimonyPayment', async (req, res) => {
 
   const payments = await calculateAlimonyPayments(children, madadIndexateInterval, startPaymentDate, endPaymentDate, baseIndexateDate, paymentDayInMonth);
 
-  res.send({payments});
+  res.send({ payments });
 });
 
 app.post('/insuranceYield', async (req, res) => {
@@ -71,7 +72,7 @@ app.post('/insuranceYield', async (req, res) => {
   const sum = req.body.sum;
 
   const result = await calcInsuranceYield(fundId, startDate, endDate);
-  res.send({result});
+  res.send({ result });
 });
 
 app.post('/providentFundYield', async (req, res) => {
@@ -81,7 +82,7 @@ app.post('/providentFundYield', async (req, res) => {
   const sum = req.body.sum;
 
   const result = await calcProvidentFundYield(fundId, startDate, endDate);
-  res.send({result});
+  res.send({ result });
 });
 
 app.post('/pensionYield', async (req, res) => {
@@ -92,13 +93,13 @@ app.post('/pensionYield', async (req, res) => {
   const sum = req.body.sum;
 
   const result = await calcPensionYield(fundId, startDate, endDate);
-  res.send({result});
+  res.send({ result });
 });
 
-app.post('/madadIndexate', async (req,res) => {
+app.post('/madadIndexate', async (req, res) => {
   const rowsPayload = req.body.indexatePayload;
   const result = await madadCalculate(rowsPayload);
-  res.send({result});
+  res.send({ result });
 });
 
 app.post('/calcUseRegestration', async (req, res) => {
@@ -111,7 +112,7 @@ app.post('/calcUseRegestration', async (req, res) => {
 
 app.get('/interestsTable', async (req, res) => {
   const result = await getInterestsTable();
-  res.send({result});
+  res.send({ result });
 });
 
 app.post('/salaryDetermine', async (req, res) => {
@@ -125,7 +126,7 @@ app.post('/salaryDetermine', async (req, res) => {
 
 app.get('/annuitiesTable', async (req, res) => {
   const result = await annuityRepo.getAll();
-  res.send({result});
+  res.send({ result });
 });
 
 app.post('/annuitiesTable', async (req, res) => {
@@ -138,9 +139,21 @@ app.post('/annuitiesTable', async (req, res) => {
 app.post('/annuityDepositsCalculator', async (req, res) => {
   const deposites = req.body.deposits;
   const result = await calculateAnnuities(deposites);
-  res.send({result});
+  res.send({ result });
 });
 
+app.post('/annuityForm', async (req, res) => {
+  const data = getFormFromTemplate(req.body.data);
+  res.writeHead(200, {
+    'Content-Type': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'Content-disposition': 'attachment;filename=annuities-form.docx',
+    'Content-Length': data.length
+  });
+
+  res.end(Buffer.from(data, 'binary'));
+});
+
+
 app.listen(app.get('port'), () => {
-  console.log(`${app.get('name')} is running at localhost: ${app.get('port')}`); 
+  console.log(`${app.get('name')} is running at localhost: ${app.get('port')}`);
 });
