@@ -2,19 +2,16 @@ const PizZip = require("pizzip");
 const Docxtemplater = require("docxtemplater");
 
 const fs = require("fs");
-const path = require("path");
-
-// Load the docx file as binary content
-const content = fs.readFileSync(
-    './assets/annuity_form_template.docx',
-    "binary"
-);
-
-const zip = new PizZip(content);
-
-
 
 const getFormFromTemplate = (data) => {
+    // Load the docx file as binary content
+    const content = fs.readFileSync(
+        './assets/annuity_form_template.docx',
+        "binary"
+    );
+
+    const zip = new PizZip(content);
+
     const doc = new Docxtemplater(zip, {
         paragraphLoop: true,
         linebreaks: true,
@@ -39,4 +36,4 @@ const getFormFromTemplate = (data) => {
     return buf;
 }
 
-module.exports = {getFormFromTemplate}
+module.exports = { getFormFromTemplate }
