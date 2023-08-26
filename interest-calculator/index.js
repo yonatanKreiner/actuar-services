@@ -15,6 +15,7 @@ const CalculateSalaryDetermine = require('./src/calculators/salaryDetermineCalcu
 const annuityRepo = require('./src/repos/annuity-repo');
 const { calculateAnnuities } = require('./src/calculators/annuityDepositsCalculator');
 const { getFormFromTemplate } = require('./src/tools/annuityForm');
+const { calculatePoliciesTable } = require('./src/calculators/annuitiesPoliciesCalculation'); 
 
 const app = express();
 
@@ -151,6 +152,13 @@ app.post('/annuityForm', async (req, res) => {
   });
 
   res.end(Buffer.from(data, 'binary'));
+});
+
+app.post('/annuitiesPoliciesCalculation', async (req, res) => {
+  const policies = req.body.policiesTable;
+  const result = await calculatePoliciesTable(policies);
+
+  res.send({result});
 });
 
 

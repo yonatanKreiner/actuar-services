@@ -1,4 +1,3 @@
-const moment = require('moment');
 const annuityRepo = require('../repos/annuity-repo');
 
 const calculateAnnuities = async (deposits) => {
