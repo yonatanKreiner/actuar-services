@@ -19,8 +19,12 @@ const addExtra = async (debt) => {
     let hazmadaMadad = 0;
     let hazmadaRibit = 0; 
     if(debt.interestType !== 'shekel-interest'){
-        hazmadaMadad = await getIndexate(debtSum, debtDate, paymentDate);
-        hazmadaRibit = await getIndexate(interestDifference, debtDate, paymentDate);
+        const hazmadaMadadPromise = getIndexate(debtSum, debtDate, paymentDate);
+        const hazmadaRibitPromise = getIndexate(interestDifference, debtDate, paymentDate);
+
+        const results = await Promise.all([hazmadaMadadPromise,hazmadaRibitPromise]);
+        hazmadaMadad = results[0];
+        hazmadaRibit = results[1];
     }
 
     console.log(`end calc debt: ${debt}`);
