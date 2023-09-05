@@ -1,4 +1,4 @@
-const {getIndexate} = require('../tools/madad');
+const {getIndexate, getIndexatePrecent} = require('../tools/madad');
 const {getInterestDifferences} = require('../tools/interest');
 
 const interestCalculate = async (debts) => {
@@ -19,12 +19,9 @@ const addExtra = async (debt) => {
     let hazmadaMadad = 0;
     let hazmadaRibit = 0; 
     if(debt.interestType !== 'shekel-interest'){
-        const hazmadaMadadPromise = getIndexate(debtSum, debtDate, paymentDate);
-        const hazmadaRibitPromise = getIndexate(interestDifference, debtDate, paymentDate);
-
-        const results = await Promise.all([hazmadaMadadPromise,hazmadaRibitPromise]);
-        hazmadaMadad = results[0];
-        hazmadaRibit = results[1];
+        const indexatePrecent = await getIndexatePrecent(debtDate, paymentDate);
+        hazmadaMadad = debtSum * indexatePrecent
+        hazmadaRibit = interestDifference * indexatePrecent;
     }
 
     console.log(`end calc debt: ${debt}`);
