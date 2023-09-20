@@ -16,7 +16,7 @@ const annuityRepo = require('./src/repos/annuity-repo');
 const { calculateAnnuities } = require('./src/calculators/annuityDepositsCalculator');
 const { getFormFromTemplate } = require('./src/tools/annuityForm');
 const { calculatePoliciesTable } = require('./src/calculators/annuitiesPoliciesCalculation'); 
-
+const { getFormFromTemplate: getFormFromTemplateAnnuitiesPolicies  }  = require('./src/tools/annuityPerPolicyForm');
 const app = express();
 
 if (process.env.NODE_ENV === 'development') {
@@ -159,6 +159,18 @@ app.post('/annuitiesPoliciesCalculation', async (req, res) => {
   const result = await calculatePoliciesTable(policies);
 
   res.send({result});
+});
+
+
+app.post('/annuityPoliciesForm', async (req, res) => {
+  const data = await getFormFromTemplateAnnuitiesPolicies(req.body.data);
+  res.writeHead(200, {
+    'Content-Type': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'Content-disposition': 'attachment;filename=annuities-form.docx',
+    'Content-Length': data.length
+  });
+
+  res.end(data);
 });
 
 
