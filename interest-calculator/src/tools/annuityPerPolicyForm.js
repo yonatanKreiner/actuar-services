@@ -53,8 +53,8 @@ const createTableFromPolicyData = (policy) => {
                     }),
                 ].reverse()
             }),
-            ...policy.deposits.reverse().map(x => new TableRow({
-                children: Object.values(x).map(column => new TableCell({
+            ...policy.deposits.map(x => new TableRow({
+                children: Object.values(x).reverse().map(column => new TableCell({
                     children: [new Paragraph({text: column.toString()})],
                     verticalAlign: VerticalAlign.CENTER,
                 }))
