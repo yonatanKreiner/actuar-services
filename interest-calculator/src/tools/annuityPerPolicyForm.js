@@ -51,9 +51,9 @@ const createTableFromPolicyData = (policy) => {
                         children: [new Paragraph({ text: "פיצויים פטור ממס" })],
                         textDirection: TextDirection.CENTER,
                     }),
-                ]
+                ].reverse()
             }),
-            ...policy.deposits.map(x => new TableRow({
+            ...policy.deposits.reverse().map(x => new TableRow({
                 children: Object.values(x).map(column => new TableCell({
                     children: [new Paragraph({text: column.toString()})],
                     verticalAlign: VerticalAlign.CENTER,
