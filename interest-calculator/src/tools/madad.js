@@ -40,7 +40,7 @@ const getIndexatePrecent = async (startDate, endDate) => {
     try {
         axiosRetry(axios, {
             retries: 4, retryDelay: (retryCount, error) => {
-                retryCount * 1000
+                retryCount * 100
             },
             onRetry: (retryCount, error, requestConfig) => {
                  console.log(`num of retry: ${retryCount}`) 
