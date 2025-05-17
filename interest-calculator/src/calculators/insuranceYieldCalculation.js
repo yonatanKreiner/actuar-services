@@ -3,6 +3,7 @@ const https = require('https');
 const moment = require('moment');
 
 const YearToInsuranceNetApiURL = {
+    2025: "https://data.gov.il/api/3/action/datastore_search?resource_id=c6c62cc7-fe02-4b18-8f3e-813abfbb4647&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
     2024: "https://data.gov.il/api/3/action/datastore_search?resource_id=c6c62cc7-fe02-4b18-8f3e-813abfbb4647&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
     2023: "https://data.gov.il/api/3/action/datastore_search?resource_id=672090ba-7893-4496-a07c-dc7e822cbf18&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
     2022: "https://data.gov.il/api/3/action/datastore_search?resource_id=584e6b69-174f-46c9-b8db-03925b4c68c6&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
