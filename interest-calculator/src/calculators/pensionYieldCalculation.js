@@ -56,7 +56,7 @@ const getFundDataForMonth = async (fundId, year, ...periodDates) => {
         result = [...result, ...await getRecordsFromAPI(`${YearToPensionNetApiURL[year]}&offset=${100}&q=${fundId}`)];
     }
 
-    return result.filter(record => record.FUND_ID == fundId);
+    return result.filter(record => record.FUND_ID == fundId && moment(record.REPORT_PERIOD, "YYYYMM").toDate().getFullYear() === year);
 }
 
 const agent = new https.Agent({  
