@@ -2,14 +2,40 @@ const axios = require('axios');
 const https = require('https');
 const moment = require('moment');
 
+const URL_1999_2022 = "https://data.gov.il/api/3/action/datastore_search?resource_id=584e6b69-174f-46c9-b8db-03925b4c68c6&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD";
+const URL_2023 = "https://data.gov.il/api/3/action/datastore_search?resource_id=672090ba-7893-4496-a07c-dc7e822cbf18&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD";
+const URL_2024_TODAY = "https://data.gov.il/api/3/action/datastore_search?resource_id=c6c62cc7-fe02-4b18-8f3e-813abfbb4647&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD" 
+
 const YearToInsuranceNetApiURL = {
-    2025: "https://data.gov.il/api/3/action/datastore_search?resource_id=c6c62cc7-fe02-4b18-8f3e-813abfbb4647&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2024: "https://data.gov.il/api/3/action/datastore_search?resource_id=c6c62cc7-fe02-4b18-8f3e-813abfbb4647&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2023: "https://data.gov.il/api/3/action/datastore_search?resource_id=672090ba-7893-4496-a07c-dc7e822cbf18&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2022: "https://data.gov.il/api/3/action/datastore_search?resource_id=584e6b69-174f-46c9-b8db-03925b4c68c6&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2021: "https://data.gov.il/api/3/action/datastore_search?resource_id=d706cbbb-b1d6-4e6b-9a7e-599a78616a5f&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2020: "https://data.gov.il/api/3/action/datastore_search?resource_id=8bd9b499-0985-4231-b4c2-9a0bb67a6e0c&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2019: "https://data.gov.il/api/3/action/datastore_search?resource_id=8cba3c0c-100d-4865-bc26-55651a9d054e&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
+    2027: URL_2024_TODAY,
+    2026: URL_2024_TODAY,
+    2025: URL_2024_TODAY,
+    2024: URL_2024_TODAY,
+    2023: URL_2023,
+    2022: URL_1999_2022,
+    2021: URL_1999_2022,
+    2020: URL_1999_2022,
+    2019: URL_1999_2022,
+    2018: URL_1999_2022,
+    2017: URL_1999_2022,
+    2016: URL_1999_2022,
+    2015: URL_1999_2022,
+    2014: URL_1999_2022,
+    2013: URL_1999_2022,
+    2012: URL_1999_2022,
+    2011: URL_1999_2022,
+    2010: URL_1999_2022,
+    2009: URL_1999_2022,
+    2008: URL_1999_2022,
+    2007: URL_1999_2022,
+    2006: URL_1999_2022,
+    2005: URL_1999_2022,
+    2004: URL_1999_2022,
+    2003: URL_1999_2022,
+    2002: URL_1999_2022,
+    2001: URL_1999_2022,
+    2000: URL_1999_2022,
+    1999: URL_1999_2022,
  }
 
 const calcInsuranceYield = async (fundId, startDate, endDate, sum) => {

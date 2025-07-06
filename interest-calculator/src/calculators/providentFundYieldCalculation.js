@@ -2,16 +2,42 @@ const axios = require('axios');
 const https = require('https');
 const moment = require('moment');
 
-const YearToProvidentNetApiURL = {
-    2025: "https://data.gov.il/api/3/action/datastore_search?resource_id=a30dcbea-a1d2-482c-ae29-8f781f5025fb&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2024: "https://data.gov.il/api/3/action/datastore_search?resource_id=a30dcbea-a1d2-482c-ae29-8f781f5025fb&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2023: "https://data.gov.il/api/3/action/datastore_search?resource_id=2016d770-f094-4a2e-983e-797c26479720&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2022: "https://data.gov.il/api/3/action/datastore_search?resource_id=91c849ed-ddc4-472b-bd09-0f5486cea35c&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2021: "https://data.gov.il/api/3/action/datastore_search?resource_id=a113d56c-5f55-4861-8e04-ab2cf06f41d9&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2020: "https://data.gov.il/api/3/action/datastore_search?resource_id=05f1e5d5-5c29-4c93-a5b2-e745720bdb22&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2019: "https://data.gov.il/api/3/action/datastore_search?resource_id=469633a2-5538-4f2c-a0ed-6ed5bc2f74c6&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
- }
+const URL_1999_2022 = "https://data.gov.il/api/3/action/datastore_search?resource_id=91c849ed-ddc4-472b-bd09-0f5486cea35c&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD";
+const URL_2023 = "https://data.gov.il/api/3/action/datastore_search?resource_id=2016d770-f094-4a2e-983e-797c26479720&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD";
+const URL_2024_TODAY = "https://data.gov.il/api/3/action/datastore_search?resource_id=a30dcbea-a1d2-482c-ae29-8f781f5025fb&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD" 
 
+const YearToProvidentNetApiURL = {
+    2027: URL_2024_TODAY,
+    2026: URL_2024_TODAY,
+    2025: URL_2024_TODAY,
+    2024: URL_2024_TODAY,
+    2023: URL_2023,
+    2022: URL_1999_2022,
+    2021: URL_1999_2022,
+    2020: URL_1999_2022,
+    2019: URL_1999_2022,
+    2018: URL_1999_2022,
+    2017: URL_1999_2022,
+    2016: URL_1999_2022,
+    2015: URL_1999_2022,
+    2014: URL_1999_2022,
+    2013: URL_1999_2022,
+    2012: URL_1999_2022,
+    2011: URL_1999_2022,
+    2010: URL_1999_2022,
+    2009: URL_1999_2022,
+    2008: URL_1999_2022,
+    2007: URL_1999_2022,
+    2006: URL_1999_2022,
+    2005: URL_1999_2022,
+    2004: URL_1999_2022,
+    2003: URL_1999_2022,
+    2002: URL_1999_2022,
+    2001: URL_1999_2022,
+    2000: URL_1999_2022,
+    1999: URL_1999_2022,
+ }
+ 
 const calcProvidentFundYield = async (fundId, startDate, endDate, sum) => {
    const records = await getSpecificRecords(startDate, endDate, fundId);
    console.log(records)

@@ -2,23 +2,43 @@ const axios = require('axios');
 const https = require('https');
 const moment = require('moment');
 
-const YearToPensionNetApiURL = {
-    2025: "https://data.gov.il/api/3/action/datastore_search?resource_id=6d47d6b5-cb08-488b-b333-f1e717b1e1bd&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2024: "https://data.gov.il/api/3/action/datastore_search?resource_id=6d47d6b5-cb08-488b-b333-f1e717b1e1bd&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2023: "https://data.gov.il/api/3/action/datastore_search?resource_id=4694d5a7-5284-4f3d-a2cb-5887f43fb55e&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2022: "https://data.gov.il/api/3/action/datastore_search?resource_id=a66926f3-e396-4984-a4db-75486751c2f7&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2021: "https://data.gov.il/api/3/action/datastore_search?resource_id=cad96a4d-d386-40b4-b621-e281c0ee2885&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2020: "https://data.gov.il/api/3/action/datastore_search?resource_id=31343260-5283-42b7-8a73-de8c4017a276&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2019: "https://data.gov.il/api/3/action/datastore_search?resource_id=1cd084e8-b835-4342-91cb-3cef6f724b13&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2018: "https://data.gov.il/api/3/action/datastore_search?resource_id=3c7b9615-3f0a-4f66-a999-6dc52ec7399e&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD", 
-    2017: "https://data.gov.il/api/3/action/datastore_search?resource_id=3e52f719-d1b9-4c53-80c6-259c44fa15be&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2016: "https://data.gov.il/api/3/action/datastore_search?resource_id=3da3b955-b197-40d5-9d70-21e8d08b0aee&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2015: "https://data.gov.il/api/3/action/datastore_search?resource_id=8cfa1626-086f-415a-8c21-253783b49615&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2014: "https://data.gov.il/api/3/action/datastore_search?resource_id=1a6fb38a-d6ef-44c8-8cdb-82ee84309964&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2013: "https://data.gov.il/api/3/action/datastore_search?resource_id=a3129eda-e298-4ab9-ab55-37b0f021c873&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2012: "https://data.gov.il/api/3/action/datastore_search?resource_id=fe8d1866-abf9-4286-8fb5-cd9d12b84765&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-    2011: "https://data.gov.il/api/3/action/datastore_search?resource_id=90da8bc7-645d-4ef9-9f68-31fcf22f1c30&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD",
-}
+
+const URL_1999_2022 = "https://data.gov.il/api/3/action/datastore_search?resource_id=a66926f3-e396-4984-a4db-75486751c2f7&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD";
+const URL_2023 = "https://data.gov.il/api/3/action/datastore_search?resource_id=4694d5a7-5284-4f3d-a2cb-5887f43fb55e&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD";
+const URL_2024_TODAY = "https://data.gov.il/api/3/action/datastore_search?resource_id=6d47d6b5-cb08-488b-b333-f1e717b1e1bd&fields=FUND_NAME&fields=FUND_ID&fields=REPORT_PERIOD&fields=MONTHLY_YIELD"
+
+
+const YearToPensionNetApiURL =  {
+    2027: URL_2024_TODAY,
+    2026: URL_2024_TODAY,
+    2025: URL_2024_TODAY,
+    2024: URL_2024_TODAY,
+    2023: URL_2023,
+    2022: URL_1999_2022,
+    2021: URL_1999_2022,
+    2020: URL_1999_2022,
+    2019: URL_1999_2022,
+    2018: URL_1999_2022,
+    2017: URL_1999_2022,
+    2016: URL_1999_2022,
+    2015: URL_1999_2022,
+    2014: URL_1999_2022,
+    2013: URL_1999_2022,
+    2012: URL_1999_2022,
+    2011: URL_1999_2022,
+    2010: URL_1999_2022,
+    2009: URL_1999_2022,
+    2008: URL_1999_2022,
+    2007: URL_1999_2022,
+    2006: URL_1999_2022,
+    2005: URL_1999_2022,
+    2004: URL_1999_2022,
+    2003: URL_1999_2022,
+    2002: URL_1999_2022,
+    2001: URL_1999_2022,
+    2000: URL_1999_2022,
+    1999: URL_1999_2022,
+ }
 
 const calcPensionYield = async (fundId, startDate, endDate, sum) => {
    const records = await getSpecificRecords(startDate, endDate, fundId);
