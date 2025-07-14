@@ -180,9 +180,9 @@ const refreshExcelFiles = async () => {
         await saveTempXLS('https://ga.mof.gov.il/api/rate/history/10')
         shekelInterestsExcel = getExcel("./assets/interest_tmp.xls");
 
-        interests.ligelInterests = getInterestsTable('legal-interest').data.slice(2).map(x => ({ date: x[0], interest: x[1] })).reverse();
-        interests.illigelInterests = getInterestsTable('illegal-interest').data.slice(2).map(x => ({ date: x[0], interest: x[1] })).reverse();
-        interests.shekelInterests = getInterestsTable('shekel-interest').data.slice(2).map(x => ({ date: x[0], interest: x[1] })).reverse();
+        interests.ligelInterests = getInterestsTable('legal-interest').data.slice(2).map(x => ({ date: x[0], interest: x[1] || 1 })).reverse();
+        interests.illigelInterests = getInterestsTable('illegal-interest').data.slice(2).map(x => ({ date: x[0], interest: x[1] || 1})).reverse();
+        interests.shekelInterests = getInterestsTable('shekel-interest').data.slice(2).map(x => ({ date: x[0], interest: x[1] || 1})).reverse();
 
         await updateAll(interests)
     } catch (err) {
@@ -197,10 +197,13 @@ const saveTempXLS = (url) => {
         method: 'get',
         headers: {
             'Content-Type': 'blob',
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0",
         },
     }).then((result) => {
+        console.log(`successfully fetched ${url}`);
         const outputFilename = './assets/interest_tmp.xls';
         fs.writeFileSync(outputFilename, result.data);
+        console.log(`saved ${outputFilename}`);
         return outputFilename;
     });
 }
